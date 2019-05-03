@@ -31,5 +31,10 @@
   "devDependencies": {
     "jquery": "^3.3.1",
     "popper.js": "^1.14.6"
+  },
+  "engines": {
+    "node": "11.14.0",
+    "npm": "6.9.0",
+    "yarn": "1.15.2"
   }
 }

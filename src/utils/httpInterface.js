@@ -7,6 +7,9 @@ const envUrls = {
 }
 
 const BASE_URL = envUrls[process.env.NODE_ENV]
+console.log(process.env.NODE_ENV)
+console.log(BASE_URL)
+
 
 let headers = new Headers();
 headers.append("Content-Type", "application/json; charset=utf-8");
