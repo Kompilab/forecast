@@ -191,7 +191,17 @@ class Transactions extends Component {
               <div className="form-row">
                 <div className="form-group col-auto">
                   <label htmlFor="txDate">Date</label>
-                  <input id="email" type="text" name="date" value={date} className={`form-control ${errorClass}`} disabled={date} onChange={this.handleChange} required />
+                  <input
+                    id="txDate"
+                    type="date"
+                    name="date"
+                    value={date}
+                    min={moment().startOf('month').format('YYYY-MM-DD')}
+                    max={moment().format('YYYY-MM-DD')}
+                    className={`form-control ${errorClass}`}
+                    onChange={this.handleChange}
+                    required
+                  />
                 </div>
                 <div className="form-group col-auto">
                   <label htmlFor="txDescription">Description</label>

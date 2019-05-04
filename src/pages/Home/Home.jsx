@@ -126,7 +126,9 @@ class Home extends Component {
 
           <div className="row justify-content-center">
             <Link to="/dashboard">
-              <button className="btn btn-primary btn-fo-primary my-2 my-sm-0 btn-lg">Get Started Now</button>
+              <button className="btn btn-primary btn-fo-primary my-2 my-sm-0 btn-lg">
+                { userAuth.isAuthenticated ? 'My Dashboard' : 'Get Started Now' }
+              </button>
             </Link>
           </div>
         </section>
