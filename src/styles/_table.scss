@@ -1,0 +1,183 @@
+.custom-table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+.custom-table tr th {
+  border-bottom: 1px dashed #ced4da;
+  color: #495057;
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+.custom-table tr td {
+  border-bottom: 1px solid #ced4da;
+  font-size: 0.875rem;
+  padding-bottom: 10px;
+  padding-top: 10px;
+}
+.custom-table tr td .no-image {
+  align-items: center;
+  background: #959ca7;
+  color: white;
+  display: flex;
+  font-size: 0.9rem;
+  justify-content: center;
+  font-weight: normal;
+  height: 40px;
+  width: 40px;
+}
+.custom-table tr td .student-status {
+  border-radius: 50%;
+  height: 10px;
+  width: 10px;
+}
+.custom-table tr td .student-status.active {
+  background: #28a745;
+}
+.custom-table tr td .student-status.pending {
+  background: #adb5bd;
+}
+.custom-table tr td .student-status.inactive {
+  background: #dc3545;
+}
+.custom-table tr td .delete, .custom-table tr td .update {
+  font-size: 2em;
+  margin-right: 5px;
+}
+.custom-table tr td .delete a, .custom-table tr td .update a {
+  color: #adb5bd;
+}
+.custom-table tr td .delete a:hover, .custom-table tr td .update a:hover {
+  color: inherit;
+}
+.custom-table tr td .delete a:hover {
+  color: #f33;
+}
+.custom-table tbody tr:nth-of-type(odd) {
+  background: #f8f9fa;
+}
+.custom-table tbody tr.clickable {
+  border-left: 2px solid transparent;
+  border-right: 2px solid transparent;
+}
+@media only screen and (min-width: 768px) {
+  .custom-table tbody tr.clickable td {
+    padding: 10px 3px;
+ }
+}
+.custom-table tbody tr.clickable:hover {
+  background: #ffe7d2;
+  border-left: 2px solid #00777f;
+  border-right: 2px solid #00777f;
+  cursor: pointer;
+  transition: all ease-in-out .25s;
+}
+.custom-table tbody tr.clickable.deleted {
+  background: #ffb3b3;
+}
+@media only screen and (max-width: 767px) {
+  .custom-tabletable, .custom-table thead, .custom-table tbody, .custom-table th, .custom-table td, .custom-table tr {
+    display: block;
+ }
+  .custom-table thead tr {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+ }
+  .custom-table tr {
+    border: 1px solid #dee2e6;
+    display: block;
+    margin-bottom: 1rem;
+ }
+  .custom-table tr td {
+    border: none;
+    padding-left: 50%;
+    position: relative;
+ }
+  .custom-table tr td:not(:last-child) {
+    border-bottom: 1px dashed #ced4da;
+ }
+  .custom-table tr td:before {
+    content: attr(data-label);
+    font-size: 0.75rem;
+    font-weight: 500;
+    left: 6px;
+    padding-right: 10px;
+    position: absolute;
+    text-transform: uppercase;
+    white-space: nowrap;
+    width: 45%;
+ }
+}
+@media only screen and (max-width: 374px) {
+  .custom-table tr td {
+    font-size: 0.75rem;
+ }
+  .custom-table tr td:before {
+    font-size: 0.625rem;
+ }
+}
+.rows-table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+.rows-tabletable, .rows-table thead, .rows-table tbody, .rows-table th, .rows-table td, .rows-table tr {
+  display: block;
+}
+.rows-table tr td {
+  padding-left: 50%;
+  padding-bottom: 15px;
+  padding-top: 15px;
+  position: relative;
+}
+.rows-table tr td:before {
+  content: attr(data-label);
+  font-size: 0.9375rem;
+  left: 0;
+  letter-spacing: 1px;
+  padding-right: 10px;
+  position: absolute;
+  text-transform: uppercase;
+  width: 45%;
+}
+.rows-table tr td .n-a {
+  color: #adb5bd;
+}
+@media only screen and (max-width: 374px) {
+  .rows-table tr td {
+    font-size: 0.75rem;
+ }
+  .rows-table tr td:before {
+    font-size: 0.75rem;
+ }
+}
+@media only screen and (min-width: 375px) and (max-width: 575px) {
+  .rows-table tr td {
+    font-size: 0.875rem;
+ }
+  .rows-table tr td:before {
+    font-size: 0.875rem;
+ }
+}
+@media only screen and (min-width: 576px) and (max-width: 767px) {
+  .rows-table tr td {
+    font-size: 0.75rem;
+ }
+  .rows-table tr td:before {
+    font-size: 0.75rem;
+ }
+}
+@media only screen and (min-width: 768px) and (max-width: 1200px) {
+  .rows-table tr td {
+    font-size: 0.875rem;
+ }
+  .rows-table tr td:before {
+    font-size: 0.875rem;
+ }
+}
