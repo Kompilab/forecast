@@ -27,6 +27,22 @@ const httpInterface = {
       headers: headers,
       body: JSON.stringify(payload)
     })
+  },
+  processMultiple(requests) {
+    const buildRequests = requests.map(request => {
+      let options = {
+        method: request.method,
+        headers: headers
+      }
+
+      if (request.body) {
+        options.body = JSON.stringify(request.body)
+      }
+
+      return fetch(`${BASE_URL}${request.path}`, options)
+    });
+
+    return Promise.all(buildRequests)
   }
 };
 

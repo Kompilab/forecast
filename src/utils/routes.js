@@ -40,6 +40,18 @@ const apiRoutes = {
       method: 'POST',
       path: '/api/v1/financial_transactions'
     }
+  },
+  parentCategoriesWithCategories: () => {
+    return {
+      method: 'GET',
+      path: '/api/v1/parent_categories?with_categories=true'
+    }
+  },
+  paymentMethods: () => {
+    return {
+      method: 'GET',
+      path: '/api/v1/financial_transactions/payment_methods'
+    }
   }
 };
 
