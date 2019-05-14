@@ -61,7 +61,6 @@ class Login extends Component {
       <div className="auth-sign-in">
         <h2>Sign In</h2>
         <p>Don't have a forecast account? <Link to="/auth/sign-up">Sign up now</Link></p>
-        <p><Link to="/auth/confirm">Confirm email</Link></p>
 
         {
           from.pathname === '/' ? null : (

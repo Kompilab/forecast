@@ -27,10 +27,8 @@ class TransactionForm extends Component {
     };
 
     this._fetchData = this._fetchData.bind(this);
-    // this.loadTransactions = this.loadTransactions.bind(this);
     this.clearForm = this.clearForm.bind(this);
 
-    // this.handleToggleForm = this.handleToggleForm.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this._handleCreateTransaction = this._handleCreateTransaction.bind(this);
   }
