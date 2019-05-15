@@ -164,7 +164,7 @@ class TransactionForm extends Component {
               <label htmlFor="txAmount">Amount</label>
               <div className="input-group">
                 <div className="input-group-prepend">
-                  <span className="input-group-text">N</span>
+                  <span className="input-group-text">&#x20a6;</span>
                 </div>
                 <input id="txAmount" type="number" step="0.01" name="amount" className={`form-control ${errorClass}`} onChange={this.handleChange} placeholder="" aria-label="Naira amount (with dot and two decimal places)" required />
               </div>
