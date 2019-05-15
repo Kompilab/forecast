@@ -4,6 +4,7 @@ import Icon from 'react-web-vector-icons';
 import transactions from '../../../../services/transactions';
 import TransactionForm from '../../../../components/TransactionForm';
 import FormattersHelpers from '../../../../helpers/formatter_helpers';
+import globalRequests from '../../../../services/global';
 
 class Transactions extends Component {
   constructor(props) {
@@ -11,34 +12,43 @@ class Transactions extends Component {
 
     this.state = {
       transactions: [],
+      calculations: {},
       loading: false,
       errors: null,
       formOpen: false,
     };
 
-    this._fetchTransactions = this._fetchTransactions.bind(this);
+    this._fetchData = this._fetchData.bind(this);
     this.loadTransactions = this.loadTransactions.bind(this);
     this.handleToggleForm = this.handleToggleForm.bind(this);
   }
 
   componentDidMount() {
-    this._fetchTransactions()
+    this._fetchData()
   }
 
-  _fetchTransactions() {
+  _fetchData() {
     this.setState({loading: true});
 
-    transactions.getAll((success, response) => {
+    globalRequests.transactionsInitData((success, responses ) => {
+      this.setState({
+        loading: false
+      });
+
       if (success) {
-        this.setState({
-          loading: false,
-          transactions: response
-        })
+        for(let i=0; i < responses.length; i++) {
+          let states = ['transactions', 'calculations'];
+
+          responses[i].then(data => {
+            this.setState({
+              [states[i]]: data
+            })
+          })
+        }
       } else {
         this.setState({
-          loading: false,
-          errors: response
-        })
+          errors: responses
+        });
       }
     })
   }
@@ -99,17 +109,17 @@ class Transactions extends Component {
   }
 
   render() {
-    const { loading, transactions, formOpen, errors } = this.state;
+    const { loading, transactions, formOpen, errors, calculations } = this.state;
 
     return (
       <div>
         <section className="at-a-glance">
           <h5>At a glance</h5>
           <div>
-            Income: N 30,000
+            Income: &#x20a6; {calculations.income}
           </div>
           <div>
-            Expenses: N 20,000
+            Expenses: &#x20a6; {calculations.expenses}
           </div>
         </section>
 

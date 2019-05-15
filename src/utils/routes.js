@@ -1,3 +1,5 @@
+import currentUser from "./currentUser";
+
 const apiRoutes = {
   login: () => {
     return {
@@ -51,6 +53,12 @@ const apiRoutes = {
     return {
       method: 'GET',
       path: '/api/v1/financial_transactions/payment_methods'
+    }
+  },
+  transactionCalculations: (id) => {
+    return {
+      method: 'GET',
+      path: `/api/v1/financial_transactions/${currentUser.id}/calculations`
     }
   }
 };
