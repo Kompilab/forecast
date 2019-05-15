@@ -21,7 +21,7 @@ class TransactionForm extends Component {
       description: '',
       amount: '',
       type: '',
-      category_id: '',
+      selectedCategory: null,
       payment_method: '',
       notes: ''
     };
@@ -30,6 +30,7 @@ class TransactionForm extends Component {
     this.clearForm = this.clearForm.bind(this);
 
     this.handleChange = this.handleChange.bind(this);
+    this.handleOnCategoryChange = this.handleOnCategoryChange.bind(this);
     this._handleCreateTransaction = this._handleCreateTransaction.bind(this);
   }
 
@@ -75,6 +76,12 @@ class TransactionForm extends Component {
     })
   }
 
+  handleOnCategoryChange(category) {
+    this.setState({
+      selectedCategory: category
+    })
+  }
+
   _handleCreateTransaction(e) {
     e.preventDefault();
     this.setState({loading: true, errors: null});
@@ -88,7 +95,7 @@ class TransactionForm extends Component {
           description: '',
           amount: '',
           type: '',
-          category_id: '',
+          selectedCategory: null,
           payment_method: '',
           notes: '',
           loading: false,
@@ -110,7 +117,7 @@ class TransactionForm extends Component {
       amount: raw.amount,
       transaction_type: raw.type,
       transaction_date: raw.date,
-      category_id: raw.category_id,
+      category_id: raw.selectedCategory.id,
       source: 'manual',
       payment_method: raw.payment_method,
       notes: raw.notes
@@ -123,7 +130,7 @@ class TransactionForm extends Component {
       description: '',
       amount: '',
       type: '',
-      category_id: '',
+      selectedCategory: null,
       payment_method: '',
       notes: '',
       loading: false,
@@ -133,7 +140,7 @@ class TransactionForm extends Component {
   }
 
   render() {
-    const { date, loading, errors, categories, paymentMethods } = this.state;
+    const { date, loading, errors, categories, selectedCategory, paymentMethods } = this.state;
     const errorClass = errors ? 'is-invalid' : '';
 
     console.log('==> TransactionForm: ', this.state)
@@ -180,17 +187,27 @@ class TransactionForm extends Component {
             <div className="form-group col-auto">
               <label htmlFor="txCategory">Category</label>
               <div className="dropdown">
-                <button className="btn btn-light dropdown-toggle" type="button" id="txCategoryDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Choose...
+                <button className="select-dropdown btn btn-light dropdown-toggle" type="button" id="txCategoryDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  { selectedCategory ? selectedCategory.name : 'Choose...' }
                 </button>
-                <div className="dropdown-menu" aria-labelledby="txCategoryDropdown">
+                <div className="dropdown-menu dropdown-menu-right" aria-labelledby="txCategoryDropdown">
                   {
-                    categories && categories.map((category, i) => {
+                    categories && categories.map((category, index) => {
                       return (
-                        <div key={i}>
-                        <h6 className="dropdown-header">{category.parent_category.name}</h6>
-                        <a className="dropdown-item" href="#">Action</a>
-                        </div>
+                        <li key={index} className="dropdown-submenu">
+                          <div className="dropdown-item" tabIndex="-1">{category.parent_category.name}</div>
+                          <ul className="dropdown-menu dropdown-menu-right">
+                            {
+                              category.categories.map((c, i) => {
+                                return (
+                                  <li key={i}>
+                                    <div className="dropdown-item" tabIndex="-1" onClick={() => this.handleOnCategoryChange(c)}>{c.name}</div>
+                                  </li>
+                                )
+                              })
+                            }
+                          </ul>
+                        </li>
                       )
                     })
                   }

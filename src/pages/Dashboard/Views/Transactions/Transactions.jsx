@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import './Transactions.scss';
 import Icon from 'react-web-vector-icons';
-import moment from 'moment';
 import transactions from '../../../../services/transactions';
-import globalRequests from '../../../../services/global';
 import TransactionForm from '../../../../components/TransactionForm';
+import FormattersHelpers from '../../../../helpers/formatter_helpers';
 
 class Transactions extends Component {
   constructor(props) {
@@ -12,57 +11,34 @@ class Transactions extends Component {
 
     this.state = {
       transactions: [],
-      categories: [],
       loading: false,
       errors: null,
       formOpen: false,
-
-      date: moment().format('YYYY-MM-DD'),
-      description: '',
-      amount: '',
-      type: '',
-      category_id: '',
-      payment_method: '',
-      notes: ''
     };
 
-    this._fetchData = this._fetchData.bind(this);
+    this._fetchTransactions = this._fetchTransactions.bind(this);
     this.loadTransactions = this.loadTransactions.bind(this);
-    this.clearForm = this.clearForm.bind(this);
-
     this.handleToggleForm = this.handleToggleForm.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-    this._handleCreateTransaction = this._handleCreateTransaction.bind(this);
   }
 
   componentDidMount() {
-    if (!this.state.transactions.length) {
-      this._fetchData()
-    }
+    this._fetchTransactions()
   }
 
-  _fetchData() {
+  _fetchTransactions() {
     this.setState({loading: true});
 
-    globalRequests.transactionsInitData((success, responses ) => {
-      this.setState({
-        loading: false
-      });
-
+    transactions.getAll((success, response) => {
       if (success) {
-        for(let i=0; i < responses.length; i++) {
-          let states = ['transactions', 'categories'];
-
-          responses[i].then(data => {
-            this.setState({
-              [states[i]]: data
-            })
-          })
-        }
+        this.setState({
+          loading: false,
+          transactions: response
+        })
       } else {
         this.setState({
-          errors: responses
-        });
+          loading: false,
+          errors: response
+        })
       }
     })
   }
@@ -71,69 +47,6 @@ class Transactions extends Component {
     this.setState(prevState => ({
       formOpen: !prevState.formOpen
     }))
-  }
-
-  handleChange(e) {
-    this.setState({
-      [e.target.name]: e.target.value
-    })
-  }
-
-  _handleCreateTransaction(e) {
-    e.preventDefault();
-    this.setState({loading: true, errors: null});
-
-    transactions.create(this.prepData(this.state), (success, response='') => {
-      if (success) {
-        console.log('success===> ', response);
-        this.setState({
-          transactions: response,
-          date: moment().format('YYYY-MM-DD'),
-          description: '',
-          amount: '',
-          type: '',
-          category_id: '',
-          payment_method: '',
-          notes: '',
-          loading: false,
-          errors: null,
-          formOpen: false
-        })
-      } else {
-        this.setState({
-          errors: response,
-          loading: false
-        });
-      }
-    })
-  }
-
-  prepData(raw) {
-    return {
-      description: raw.description,
-      amount: raw.amount,
-      transaction_type: raw.type,
-      transaction_date: raw.date,
-      category_id: raw.category_id,
-      source: 'manual',
-      payment_method: raw.payment_method,
-      notes: raw.notes
-    }
-  }
-
-  clearForm() {
-    this.setState({
-      date: moment().format('YYYY-MM-DD'),
-      description: '',
-      amount: '',
-      type: '',
-      category_id: '',
-      payment_method: '',
-      notes: '',
-      loading: false,
-      errors: null,
-      formOpen: false 
-    })
   }
 
   loadTransactions(data) {
@@ -186,10 +99,7 @@ class Transactions extends Component {
   }
 
   render() {
-    const { date, loading, errors, transactions, formOpen, categories } = this.state;
-    const errorClass = errors ? 'is-invalid' : '';
-
-    // console.log(this.state)
+    const { loading, transactions, formOpen, errors } = this.state;
 
     return (
       <div>
@@ -246,6 +156,12 @@ class Transactions extends Component {
             formOpen ? (
               <TransactionForm />
             ) : null
+          }
+
+          {
+            errors ? (
+              <div>{FormattersHelpers.formatErrors(errors)}</div>
+            ): null
           }
 
           <div className="transactions-list">

@@ -49,3 +49,20 @@
 .custom-select.error {
   border-color: #dc3545;
 }
+
+button.select-dropdown {
+  background-color: #fcfcfc;
+  border: 1px solid #ced4da;
+}
+
+button.select-dropdown:hover {
+  background-color: #fcfcfc;
+  border-color: #00777f;
+}
+
+button.select-dropdown:focus {
+  background-color: #fff;
+  border-color: #025f65;
+  outline: 0;
+  box-shadow: 0 0 0 0.1rem rgba(0, 119, 127, 0.1);
+}
