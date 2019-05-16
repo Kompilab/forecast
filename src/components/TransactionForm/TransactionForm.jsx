@@ -21,14 +21,12 @@ class TransactionForm extends Component {
       description: '',
       amount: '',
       type: '',
-      selectedCategory: null,
+      selectedCategory: {},
       payment_method: '',
       notes: ''
     };
 
     this._fetchData = this._fetchData.bind(this);
-    this.clearForm = this.clearForm.bind(this);
-
     this._toggleForm = this._toggleForm.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleOnCategoryChange = this.handleOnCategoryChange.bind(this);
@@ -126,21 +124,6 @@ class TransactionForm extends Component {
     }
   }
 
-  clearForm() {
-    this.setState({
-      date: moment().format('YYYY-MM-DD'),
-      description: '',
-      amount: '',
-      type: '',
-      selectedCategory: null,
-      payment_method: '',
-      notes: '',
-      loading: false,
-      errors: null,
-      formOpen: false 
-    })
-  }
-
   render() {
     const { date, loading, errors, categories, selectedCategory, paymentMethods } = this.state;
     const errorClass = errors ? 'is-invalid' : '';
@@ -148,95 +131,103 @@ class TransactionForm extends Component {
     console.log('==> TransactionForm: ', this.state)
 
     return (
-      <div className="add-transaction">
+      <div className="add-transaction mb-3">
         <form className="transaction-form">
           <div className="form-row">
-            <div className="form-group col-auto">
-              <label htmlFor="txDate">Date</label>
-              <input
-                id="txDate"
-                type="date"
-                name="date"
-                value={date}
-                min={moment().startOf('month').format('YYYY-MM-DD')}
-                max={moment().format('YYYY-MM-DD')}
-                className={`form-control ${errorClass}`}
-                onChange={this.handleChange}
-                required
-              />
-            </div>
-            <div className="form-group col-auto">
-              <label htmlFor="txDescription">Description</label>
-              <input id="txDescription" type="text" name="description" className={`form-control ${errorClass}`} onChange={this.handleChange} placeholder="Enter a description" required />
-            </div>
-            <div className="form-group col-auto">
-              <label htmlFor="txAmount">Amount</label>
-              <div className="input-group">
-                <div className="input-group-prepend">
-                  <span className="input-group-text">&#x20a6;</span>
+            <div className="col-md-6">
+              <div className="form-group">
+                <label htmlFor="txDate">Date</label>
+                <input
+                  id="txDate"
+                  type="date"
+                  name="date"
+                  value={date}
+                  min={moment().startOf('month').format('YYYY-MM-DD')}
+                  max={moment().format('YYYY-MM-DD')}
+                  className={`form-control ${errorClass}`}
+                  onChange={this.handleChange}
+                  required
+                />
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="txDescription">Description</label>
+                <input id="txDescription" type="text" name="description" className={`form-control ${errorClass}`} onChange={this.handleChange} placeholder="Enter a description" required />
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="txAmount">Amount</label>
+                <div className="input-group">
+                  <div className="input-group-prepend">
+                    <span className="input-group-text">&#x20a6;</span>
+                  </div>
+                  <input id="txAmount" type="number" step="0.01" name="amount" className={`form-control ${errorClass}`} onChange={this.handleChange} placeholder="" aria-label="Naira amount (with dot and two decimal places)" required />
                 </div>
-                <input id="txAmount" type="number" step="0.01" name="amount" className={`form-control ${errorClass}`} onChange={this.handleChange} placeholder="" aria-label="Naira amount (with dot and two decimal places)" required />
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="txNotes">Notes</label>
+                <textarea id="txNotes" row="4" name="notes" className={`form-control ${errorClass}`} onChange={this.handleChange} placeholder="Add a note about this transaction"></textarea>
               </div>
             </div>
-            <div className="form-group col-auto">
-              <label htmlFor="txType">Type</label>
-              <select className="custom-select" id="txType" name="type" onChange={this.handleChange} required>
-                <option value="">Choose...</option>
-                <option value="credit">Credit</option>
-                <option value="debit">Debit</option>
-              </select>
-            </div>
-            <div className="form-group col-auto">
-              <label htmlFor="txCategory">Category</label>
-              <div className="dropdown">
-                <button className="select-dropdown btn btn-light dropdown-toggle" type="button" id="txCategoryDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  { selectedCategory ? selectedCategory.name : 'Choose...' }
-                </button>
-                <div className="dropdown-menu dropdown-menu-right" aria-labelledby="txCategoryDropdown">
+
+            <div className="col-md-6">
+              <div className="form-group">
+                <label htmlFor="txType">Type</label>
+                <select className="custom-select" id="txType" name="type" onChange={this.handleChange} required>
+                  <option value="">Choose...</option>
+                  <option value="credit">Credit</option>
+                  <option value="debit">Debit</option>
+                </select>
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="txCategory">Category</label>
+                <div className="dropdown">
+                  <button className="select-dropdown btn btn-light btn-block text-left dropdown-toggle" type="button" id="txCategoryDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    { !!Object.keys(selectedCategory).length ? selectedCategory.name : 'Choose...' }
+                  </button>
+                  <div className="dropdown-menu dropdown-menu-left" aria-labelledby="txCategoryDropdown">
+                    {
+                      categories && categories.map((category, index) => {
+                        return (
+                          <li key={index} className="dropdown-submenu">
+                            <div className="dropdown-item" tabIndex="-1">{category.parent_category.name}</div>
+                            <ul className="dropdown-menu dropdown-menu-right">
+                              {
+                                category.categories.map((c, i) => {
+                                  return (
+                                    <li key={i}>
+                                      <div className="dropdown-item" tabIndex="-1" onClick={() => this.handleOnCategoryChange(c)}>{c.name}</div>
+                                    </li>
+                                  )
+                                })
+                              }
+                            </ul>
+                          </li>
+                        )
+                      })
+                    }
+                  </div>
+                </div>
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="txPaymentMethod">Payment Method</label>
+                <select className="custom-select" id="txPaymentMethod" name="payment_method" onChange={this.handleChange} required>
+                  <option value="">Choose...</option>
                   {
-                    categories && categories.map((category, index) => {
-                      return (
-                        <li key={index} className="dropdown-submenu">
-                          <div className="dropdown-item" tabIndex="-1">{category.parent_category.name}</div>
-                          <ul className="dropdown-menu dropdown-menu-right">
-                            {
-                              category.categories.map((c, i) => {
-                                return (
-                                  <li key={i}>
-                                    <div className="dropdown-item" tabIndex="-1" onClick={() => this.handleOnCategoryChange(c)}>{c.name}</div>
-                                  </li>
-                                )
-                              })
-                            }
-                          </ul>
-                        </li>
-                      )
+                    paymentMethods && paymentMethods.map((m, i) => {
+                      return <option value={m} key={i}>{StringHelpers.sentenceCase(m)}</option>
                     })
                   }
-                </div>
+                </select>
               </div>
-            </div>
-            <div className="form-group col-auto">
-              <label htmlFor="txPaymentMethod">Payment Method</label>
-              <select className="custom-select" id="txPaymentMethod" name="payment_method" onChange={this.handleChange} required>
-                <option value="">Choose...</option>
-                { 
-                  paymentMethods && paymentMethods.map((m, i) => {
-                    return <option value={m} key={i}>{StringHelpers.sentenceCase(m)}</option>
-                  })
-                }
-              </select>
-            </div>
-          </div>
 
-          <div className="form-row">
-            <div className="form-group col-md-6">
-              <label htmlFor="txNotes">Notes</label>
-              <textarea id="txNotes" row="4" name="notes" className={`form-control ${errorClass}`} onChange={this.handleChange} placeholder="Add a note about this transaction"></textarea>
-            </div>
-            <div className="form-group col-md-6">
-              <label htmlFor="txNotes">Receipt</label>
-              <p><em>coming soon</em></p>
+              <div className="form-group col-md-6">
+                <label htmlFor="txNotes">Receipt</label>
+                <p><em>coming soon</em></p>
+              </div>
             </div>
           </div>
 

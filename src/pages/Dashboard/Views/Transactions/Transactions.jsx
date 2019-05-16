@@ -113,8 +113,7 @@ class Transactions extends Component {
 
     return (
       <div>
-        <section className="at-a-glance">
-          <h5>At a glance</h5>
+        <section className="at-a-glance mb-3">
           <div>
             Income: &#x20a6; {calculations.income}
           </div>
@@ -123,27 +122,27 @@ class Transactions extends Component {
           </div>
         </section>
 
-        <section className="all-transactions">
+        <section className="all-transactions mb-3">
           <div className="header">
-            <div className="row">
-              <div className="col-6">
+            <div className="row mb-3">
+              <div className="col-md-6">
                 <h5>Transactions ({transactions && transactions.length})</h5>
-                <p className="text-muted"><em>as of 12:45 pm, 2019-04-28</em></p>
+                <p className="text-muted d-none"><em>as of 12:45 pm, 2019-04-28</em></p>
               </div>
 
-              <div className="col-6 text-right">
+              <div className="col-md-6 text-right">
                 <div className="btn-group mr-2" role="group" aria-label="First group">
-                  <button type="button" className="btn btn-primary" onClick={this.handleToggleForm}>
+                  <button type="button" className="btn btn-sm btn-primary" onClick={this.handleToggleForm}>
                     { formOpen ? 'Cancel' : 'Add Transaction' }
                   </button>
                 </div>
                 <div className="btn-group mr-2" role="group" aria-label="Second group">
-                  <button type="button" className="btn btn-outline-secondary">Manage Categories</button>
+                  <button type="button" className="btn btn-sm btn-outline-secondary">Manage Categories</button>
                 </div>
 
                 <div className="btn-group" role="group" aria-label="Third group">
                   <div className="btn-group" role="group">
-                    <button id="tx-more-options" type="button" className="btn btn-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <button id="tx-more-options" type="button" className="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       <Icon
                         font="Entypo"
                         name="dots-three-horizontal"
