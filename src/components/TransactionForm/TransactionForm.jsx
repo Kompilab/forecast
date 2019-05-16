@@ -29,9 +29,11 @@ class TransactionForm extends Component {
     this._fetchData = this._fetchData.bind(this);
     this.clearForm = this.clearForm.bind(this);
 
+    this._toggleForm = this._toggleForm.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleOnCategoryChange = this.handleOnCategoryChange.bind(this);
     this._handleCreateTransaction = this._handleCreateTransaction.bind(this);
+    this._refreshTransactions = this._refreshTransactions.bind(this);
   }
 
   componentDidMount() {
@@ -64,10 +66,16 @@ class TransactionForm extends Component {
     })
   }
 
-  handleToggleForm() {
-    this.setState(prevState => ({
-      formOpen: !prevState.formOpen
-    }))
+  _refreshTransactions() {
+    if (this.props.refreshTransactions) {
+      this.props.refreshTransactions()
+    }
+  }
+
+  _toggleForm() {
+    if (this.props.toggleForm) {
+      this.props.toggleForm()
+    }
   }
 
   handleChange(e) {
@@ -88,19 +96,13 @@ class TransactionForm extends Component {
 
     transactions.create(this.prepData(this.state), (success, response='') => {
       if (success) {
+        this._refreshTransactions();
+        this._toggleForm();
+
         console.log('success===> ', response);
         this.setState({
-          transactions: response,
-          date: moment().format('YYYY-MM-DD'),
-          description: '',
-          amount: '',
-          type: '',
-          selectedCategory: null,
-          payment_method: '',
-          notes: '',
           loading: false,
-          errors: null,
-          formOpen: false
+          errors: null
         })
       } else {
         this.setState({
@@ -238,32 +240,24 @@ class TransactionForm extends Component {
             </div>
           </div>
 
-          <div className="actions form-row">
-            <div className="btn-group col-md-6 mb-2" role="group" aria-label="cancel button">
-              <button onClick={this.clearForm} type="button" className="btn btn-secondary btn-block">
-                Clear
-              </button>
-            </div>
-
-            <div className="btn-group col-md-6 mb-2" role="group" aria-label="submit button">
-              <button onClick={this._handleCreateTransaction} type="submit" className="btn btn-primary btn-fo-primary btn-block" disabled={loading}>
-                {
-                  loading ? (
-                    <div>
-                      <Icon
-                        font="EvilIcons"
-                        name="spinner-2"
-                        color='#ffffff'
-                        size={18}
-                        />
-                      <span>Please wait</span>
-                    </div>
-                  ) : (
-                    <div>Save</div>
-                  )
-                }
-              </button>
-            </div>
+          <div className="actions">
+            <button onClick={this._handleCreateTransaction} type="submit" className="btn btn-primary btn-fo-primary btn-block" disabled={loading}>
+              {
+                loading ? (
+                  <div>
+                    <Icon
+                      font="EvilIcons"
+                      name="spinner-2"
+                      color='#ffffff'
+                      size={18}
+                      />
+                    <span>Please wait</span>
+                  </div>
+                ) : (
+                  <div>Save</div>
+                )
+              }
+            </button>
           </div>
         </form>
       </div>

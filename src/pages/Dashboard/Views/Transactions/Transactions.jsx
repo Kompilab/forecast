@@ -164,7 +164,9 @@ class Transactions extends Component {
 
           {
             formOpen ? (
-              <TransactionForm />
+              <TransactionForm
+                refreshTransactions={this._fetchData}
+                toggleForm={this.handleToggleForm} />
             ) : null
           }
 
