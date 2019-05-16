@@ -59,13 +59,13 @@ class Transactions extends Component {
     }))
   }
 
-  loadTransactions(data) {
+  loadTransactions(data, formOpen) {
     data = data || [];
 
     if (!data.length) {
       return (
         <div className="text-center text-muted">
-          <p>You have no transactions. Click "Add Transaction" to add one.</p>
+          <p>You have no transactions.{formOpen ? '' : ' Click "Add Transaction" to add one.'}</p>
         </div>
       )
     }
