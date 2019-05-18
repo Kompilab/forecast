@@ -94,7 +94,7 @@ class Transactions extends Component {
                     <td data-label="Transaction">{tx.description}</td>
                     <td data-label="Amount">{tx.amount}</td>
                     <td data-label="Type">{tx.transaction_type}</td>
-                    <td data-label="Category">{tx.category_id}</td>
+                    <td data-label="Category">{tx.category_name}</td>
                     <td data-label="Payment Method">{tx.payment_method}</td>
                     <td data-label="Source">{tx.source}</td>
                   </tr>
