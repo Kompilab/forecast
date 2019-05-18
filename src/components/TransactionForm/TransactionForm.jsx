@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import './TransactionForm.scss';
-import Icon from 'react-web-vector-icons';
 import moment from 'moment';
 import transactions from '../../services/transactions';
 import globalRequests from '../../services/global';
@@ -228,13 +227,8 @@ class TransactionForm extends Component {
               {
                 loading ? (
                   <div>
-                    <Icon
-                      font="EvilIcons"
-                      name="spinner-2"
-                      color='#ffffff'
-                      size={18}
-                      />
-                    <span>Please wait</span>
+                    <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                    Saving...
                   </div>
                 ) : (
                   <div>Save</div>

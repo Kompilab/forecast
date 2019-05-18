@@ -35,7 +35,7 @@ class Dashboard extends Component {
         <Router>
           <div className="dashboard container-fluid">
             <div className="row">
-              <div className="side-nav col-2">
+              <div className="side-nav col-2 d-none d-sm-none d-md-block">
                 <ul className="nav-items">
                   <li className="nav-item">
                     <NavLink exact to="/dashboard" activeClassName="active">Home</NavLink>
@@ -46,7 +46,7 @@ class Dashboard extends Component {
                 </ul>
               </div>
 
-              <div className="content col-10">
+              <div className="content col-12">
                 {dashboardRoutes.map((route, index) => (
                   <Route
                     key={index}

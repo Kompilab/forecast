@@ -111,13 +111,8 @@ class Login extends Component {
               {
                 loading ? (
                   <div>
-                    <Icon
-                      font="EvilIcons"
-                      name="spinner-2"
-                      color='#ffffff'
-                      size={18}
-                    />
-                    <span>Please wait</span>
+                    <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                    Please wait...
                   </div>
                 ) : (
                   <div>Sign In</div>

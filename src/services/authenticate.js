@@ -8,9 +8,14 @@ const concatName = data => {
   return data && `${data.first_name} ${data.last_name}`
 };
 
+const firstName = data => {
+  return data && data.first_name
+};
+
 const userAuth = {
   isAuthenticated: cookie.get('_fo_') && cookie.get('_fo_active_user_'),
   authName: concatName(cookie.get('_fo_active_user_')),
+  firstName: firstName(cookie.get('_fo_active_user_')),
   async authenticate(data, cb) {
     try {
       const payload = formatPayload(data);
@@ -31,6 +36,7 @@ const userAuth = {
 
         this.isAuthenticated = true;
         this.authName = concatName(resData);
+        this.firstName = firstName(resData);
         cb(true);
       } else {
         cb(false, resData)

@@ -1,8 +1,14 @@
+.menu-toggle {
+  &:hover {
+    cursor: pointer;
+  }
+}
+
 .sign-out {
   color: red;
 }
 
 .navbar-light .navbar-nav .nav-link.active,
 .dropdown-item.active {
-  color: #00777f;
+  background-color: #00777f;
 }

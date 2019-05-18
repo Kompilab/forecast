@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './Navbar.scss';
 import { Link, NavLink } from 'react-router-dom';
 import userAuth from '../../services/authenticate';
+import Icon from 'react-web-vector-icons';
 
 class Navbar extends Component {
   constructor(props) {
@@ -26,53 +27,56 @@ class Navbar extends Component {
 
     return (
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
+        {
+          userAuth.isAuthenticated ? (
+            <div className="mr-2 menu-dropdowns">
+              <div id="menuDropdown" className="menu-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <Icon
+                  font="Ionicons"
+                  name="ios-menu"
+                  color='#9b9b9b'
+                  size={30}
+                  // style={{}}
+                />
+              </div>
+              <div className="dropdown-menu" aria-labelledby="menuDropdown">
+                <NavLink to="/dashboard" exact className="dropdown-item" activeClassName="active">Dashboard</NavLink>
+                <NavLink to="/dashboard/transactions" className="dropdown-item" activeClassName="active">Transactions</NavLink>
+              </div>
+            </div>
+          ) : null
+        }
         <Link to="/" id="logo-title" className="navbar-brand logo-text">
           {title || titleOverride}
         </Link>
 
-        <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-          <span className="navbar-toggler-icon"></span>
-        </button>
+        {
+          userAuth.isAuthenticated ? (
+            <div className="ml-auto">
+              <button className="btn btn-light dropdown-toggle" type="button" id="navbarDropdownMenuLinks" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Hi, { userAuth.firstName }
+              </button>
 
-        <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
-          <div className="navbar-nav mr-auto"></div>
-          <div>
-          {
-            userAuth.isAuthenticated ? (
-              <div>
-                <ul className="navbar-nav">
-                  <li className="nav-item">
-                    <NavLink className="nav-link" activeClassName="active" to="/dashboard">Dashboard</NavLink>
-                  </li>
-                  <li className="nav-item dropdown">
-                    <button className="btn btn-light dropdown-toggle" type="button" id="navbarDropdownMenuLinks" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      Hi, { userAuth.authName }
-                    </button>
-
-                    <div className="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLinks">
-                      <NavLink to="/profile" className="dropdown-item" activeClassName="active">Profile</NavLink>
-                      <NavLink to="/settings" className="dropdown-item" activeClassName="active">Settings</NavLink>
-                      <div className="dropdown-divider"></div>
-                      <Link to="/" onClick={this._handleSignOut} className="dropdown-item sign-out">
-                        Sign Out
-                      </Link>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-            ) : (
-              <div>
-                <Link to="/auth/login">
-                  <button className="btn btn-light my-2 my-sm-0">Log In</button>
-                </Link>
-                <Link to="/auth/sign-up">
-                  <button className="btn btn-primary btn-fo-primary my-2 my-sm-0 ml-2">Sign Up</button>
+              <div className="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLinks">
+                <NavLink to="/profile" className="dropdown-item" activeClassName="active">Profile</NavLink>
+                <NavLink to="/settings" className="dropdown-item" activeClassName="active">Settings</NavLink>
+                <div className="dropdown-divider"></div>
+                <Link to="/" onClick={this._handleSignOut} className="dropdown-item sign-out">
+                  Sign Out
                 </Link>
               </div>
-            )
-          }
-          </div>
-        </div>
+            </div>
+          ) : (
+            <div className="ml-auto">
+              <Link to="/auth/login">
+                <button className="btn btn-light my-2 my-sm-0">Log In</button>
+              </Link>
+              <Link to="/auth/sign-up">
+                <button className="btn btn-primary btn-fo-primary my-2 my-sm-0 ml-2">Sign Up</button>
+              </Link>
+            </div>
+          )
+        }
       </nav>
     )
   }
