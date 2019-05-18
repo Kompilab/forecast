@@ -122,38 +122,55 @@ class Transactions extends Component {
         </section>
 
         <section className="all-transactions mb-3">
-          <div className="header">
-            <div className="row mb-3">
-              <div className="col-md-6">
-                <h5>Transactions ({transactions && transactions.length})</h5>
-                <p className="text-muted d-none"><em>as of 12:45 pm, 2019-04-28</em></p>
-              </div>
+          <div className="header mb-3">
+            <div className="">
+              <h5>Transactions <span class="badge badge-pill badge-secondary">{transactions && transactions.length}</span></h5>
+              <p className="text-muted d-none"><em>as of 12:45 pm, 2019-04-28</em></p>
+            </div>
 
-              <div className="col-md-6 text-right">
-                <div className="btn-group mr-2" role="group" aria-label="First group">
-                  <button type="button" className="btn btn-sm btn-primary" onClick={this.handleToggleForm}>
-                    { formOpen ? 'Cancel' : 'Add Transaction' }
-                  </button>
-                </div>
-                <div className="btn-group mr-2" role="group" aria-label="Second group">
-                  <button type="button" className="btn btn-sm btn-outline-secondary">Manage Categories</button>
-                </div>
-
-                <div className="btn-group" role="group" aria-label="Third group">
-                  <div className="btn-group" role="group">
-                    <button id="tx-more-options" type="button" className="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <div className="text-right">
+              <div className="btn-group mr-2" role="group" aria-label="First group">
+                <button type="button" className="btn btn-sm btn-primary" onClick={this.handleToggleForm}>
+                  <div className="d-sm-block d-md-none">
+                    { formOpen ? (
                       <Icon
-                        font="Entypo"
-                        name="dots-three-horizontal"
-                        color='#9b9b9b'
+                        font="AntDesign"
+                        name="close"
+                        color='#ffffff'
                         size={15}
                         // style={{}}
                       />
-                    </button>
-                    <div className="dropdown-menu dropdown-menu-right" aria-labelledby="tx-more-options">
-                      <a className="dropdown-item" href="#">Import Transactions</a>
-                      <a className="dropdown-item" href="#">Export Summary</a>
-                    </div>
+                    ) : (
+                      <Icon
+                        font="AntDesign"
+                        name="plus"
+                        color='#ffffff'
+                        size={15}
+                        // style={{}}
+                      />
+                    ) }
+                  </div>
+                  <span className="d-none d-sm-none d-md-block">
+                    { formOpen ? 'Cancel' : 'Add Transaction' }
+                  </span>
+                </button>
+              </div>
+
+              <div className="btn-group" role="group" aria-label="Third group">
+                <div className="btn-group" role="group">
+                  <button id="tx-more-options" type="button" className="btn btn-sm btn-light" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <Icon
+                      font="Entypo"
+                      name="dots-three-horizontal"
+                      color='#9b9b9b'
+                      size={15}
+                      // style={{}}
+                    />
+                  </button>
+                  <div className="dropdown-menu dropdown-menu-right" aria-labelledby="tx-more-options">
+                    <a className="dropdown-item" href="#">Manage Categories</a>
+                    <a className="dropdown-item" href="#">Import Transactions</a>
+                    <a className="dropdown-item" href="#">Export Summary</a>
                   </div>
                 </div>
               </div>
@@ -177,8 +194,10 @@ class Transactions extends Component {
           <div className="transactions-list">
             {
               loading ? (
-                <div>
-                  <p>Loading transactions</p>
+                <div className="text-center">
+                  <div className="spinner-grow text-primary" role="status" aria-hidden="true">
+                    <span class="sr-only">Loading transactions...</span>
+                  </div>
                 </div>
               ) : (
                 <div>
