@@ -18,18 +18,18 @@ class TransactionForm extends Component {
       formOpen: false,
 
       date: moment().format('YYYY-MM-DD'),
-      description: '',
-      amount: '',
       type: '',
-      selectedCategory: {},
-      payment_method: '',
-      notes: ''
+      notes: '',
+      amount: '',
+      description: '',
+      paymentMethod: '',
+      selectedCategoryId: '',
+      selectedParentCategoryIndex: ''
     };
 
     this._fetchData = this._fetchData.bind(this);
     this._toggleForm = this._toggleForm.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    this.handleOnCategoryChange = this.handleOnCategoryChange.bind(this);
     this._handleCreateTransaction = this._handleCreateTransaction.bind(this);
     this._refreshTransactions = this._refreshTransactions.bind(this);
   }
@@ -82,12 +82,6 @@ class TransactionForm extends Component {
     })
   }
 
-  handleOnCategoryChange(category) {
-    this.setState({
-      selectedCategory: category
-    })
-  }
-
   _handleCreateTransaction(e) {
     e.preventDefault();
     this.setState({loading: true, errors: null});
@@ -96,12 +90,6 @@ class TransactionForm extends Component {
       if (success) {
         this._refreshTransactions();
         this._toggleForm();
-
-        console.log('success===> ', response);
-        this.setState({
-          loading: false,
-          errors: null
-        })
       } else {
         this.setState({
           errors: response,
@@ -117,15 +105,22 @@ class TransactionForm extends Component {
       amount: raw.amount,
       transaction_type: raw.type,
       transaction_date: raw.date,
-      category_id: raw.selectedCategory.id,
+      category_id: raw.selectedCategoryId,
       source: 'manual',
-      payment_method: raw.payment_method,
+      payment_method: raw.paymentMethod,
       notes: raw.notes
     }
   }
 
   render() {
-    const { date, loading, errors, categories, selectedCategory, paymentMethods } = this.state;
+    const {
+      date,
+      errors,
+      loading,
+      categories,
+      paymentMethods,
+      selectedParentCategoryIndex
+    } = this.state;
     const errorClass = errors ? 'is-invalid' : '';
 
     console.log('==> TransactionForm: ', this.state)
@@ -182,39 +177,36 @@ class TransactionForm extends Component {
               </div>
 
               <div className="form-group">
-                <label htmlFor="txCategory">Category</label>
-                <div className="dropdown">
-                  <button className="select-dropdown btn btn-light btn-block text-left dropdown-toggle" type="button" id="txCategoryDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    { !!Object.keys(selectedCategory).length ? selectedCategory.name : 'Choose...' }
-                  </button>
-                  <div className="dropdown-menu dropdown-menu-left" aria-labelledby="txCategoryDropdown">
-                    {
-                      categories && categories.map((category, index) => {
-                        return (
-                          <li key={index} className="dropdown-submenu">
-                            <div className="dropdown-item" tabIndex="-1">{category.parent_category.name}</div>
-                            <ul className="dropdown-menu dropdown-menu-right">
-                              {
-                                category.categories.map((c, i) => {
-                                  return (
-                                    <li key={i}>
-                                      <div className="dropdown-item" tabIndex="-1" onClick={() => this.handleOnCategoryChange(c)}>{c.name}</div>
-                                    </li>
-                                  )
-                                })
-                              }
-                            </ul>
-                          </li>
-                        )
-                      })
-                    }
-                  </div>
-                </div>
+                <label htmlFor="txParentCategory">Category</label>
+                <select className="custom-select" id="txParentCategory" name="selectedParentCategoryIndex" onChange={this.handleChange} required>
+                  <option value="">Choose...</option>
+                  {
+                    categories && categories.map((parent, index) => {
+                      return <option value={index} key={index}>{parent.parent_category.name}</option>
+                    })
+                  }
+                </select>
               </div>
+
+              {
+                !!selectedParentCategoryIndex.length && (
+                  <div className="form-group">
+                    <label htmlFor="txCategory" className="sr-only">Category</label>
+                    <select className="custom-select" id="txCategory" name="selectedCategoryId" onChange={this.handleChange} required>
+                      <option value="">Choose sub-category...</option>
+                      {
+                        categories && categories[selectedParentCategoryIndex].categories.map((category, index) => {
+                          return <option value={category.id} key={index}>{category.name}</option>
+                        })
+                      }
+                    </select>
+                  </div>
+                )
+              }
 
               <div className="form-group">
                 <label htmlFor="txPaymentMethod">Payment Method</label>
-                <select className="custom-select" id="txPaymentMethod" name="payment_method" onChange={this.handleChange} required>
+                <select className="custom-select" id="txPaymentMethod" name="paymentMethod" onChange={this.handleChange} required>
                   <option value="">Choose...</option>
                   {
                     paymentMethods && paymentMethods.map((m, i) => {

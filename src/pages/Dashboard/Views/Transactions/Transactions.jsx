@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import './Transactions.scss';
 import Icon from 'react-web-vector-icons';
-import transactions from '../../../../services/transactions';
 import TransactionForm from '../../../../components/TransactionForm';
 import FormattersHelpers from '../../../../helpers/formatter_helpers';
 import globalRequests from '../../../../services/global';
