@@ -92,7 +92,7 @@ class Transactions extends Component {
                     key={index}>
                     <td data-label="Date">{tx.transaction_date}</td>
                     <td data-label="Transaction">{tx.description}</td>
-                    <td data-label="Amount">{tx.amount}</td>
+                    <td data-label="Amount" dangerouslySetInnerHTML={{ __html: FormattersHelpers.formatAmount(tx.amount) }}></td>
                     <td data-label="Type">{tx.transaction_type}</td>
                     <td data-label="Category">{tx.category_name}</td>
                     <td data-label="Payment Method">{tx.payment_method}</td>
@@ -114,10 +114,10 @@ class Transactions extends Component {
       <div>
         <section className="at-a-glance mb-3">
           <div>
-            Income: &#x20a6; {calculations.income}
+            Income: <span dangerouslySetInnerHTML={{ __html: FormattersHelpers.formatAmount(calculations.income) }}></span>
           </div>
           <div>
-            Expenses: &#x20a6; {calculations.expenses}
+            Expenses: <span dangerouslySetInnerHTML={{ __html: FormattersHelpers.formatAmount(calculations.expenses) }}></span>
           </div>
         </section>
 
