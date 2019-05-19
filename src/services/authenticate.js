@@ -98,6 +98,8 @@ const userAuth = {
       const signOutRoute = apiRoutes.signout();
       const response = await httpInterface.postData(signOutRoute.path, signOutRoute.method);
 
+      console.log("response ===> ", response)
+
       if (response.ok) {
         cookie.remove('_fo_');
         cookie.remove('_fo_active_user_');
