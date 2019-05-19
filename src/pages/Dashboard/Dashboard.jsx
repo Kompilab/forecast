@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, NavLink } from 'react-router-dom';
 import './Dashboard.scss';
 import Navbar from '../../components/Navbar';
+import Icon from 'react-web-vector-icons';
 
 // import dashboard views
 import DHome from './Views/DHome';
@@ -9,44 +10,80 @@ import Transactions from './Views/Transactions';
 
 const dashboardRoutes = [
   {
+    name: 'Dashboard',
     path: "/dashboard",
     exact: true,
-    main: () => <DHome />
+    main: () => <DHome />,
+    font: 'MaterialIcons',
+    fontName: 'dashboard'
   },
   {
+    name: 'Transactions',
     path: "/dashboard/transactions",
-    main: () => <Transactions />
+    main: () => <Transactions />,
+    font: 'MaterialIcons',
+    fontName: 'format-list-bulleted'
   }
 ];
-
 
 class Dashboard extends Component {
   constructor(props) {
     super(props)
 
-    this.state = {}
+    this.state = {
+      isMobile: false
+    }
+
+    this.setViewport = this.setViewport.bind(this);
+  }
+
+  componentDidMount() {
+    this.setViewport();
+    window.addEventListener('resize', this.setViewport);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.setViewport)
+  }
+
+  setViewport() {
+    if (window !== 'undefined') {
+      this.setState({
+        isMobile: window.innerWidth < 768
+      })
+    }
   }
 
   render() {
+    const { isMobile } = this.state;
+
     return (
       <div>
-        <Navbar {...this.props} />
+        <Navbar isMobile={isMobile} hideMenu={true} {...this.props} />
 
         <Router>
           <div className="dashboard container-fluid">
             <div className="row">
-              <div className="side-nav col-2 d-none d-sm-none d-md-block">
+              <div className={`side-nav ${isMobile ? 'col-1' : 'col-2'}`}>
                 <ul className="nav-items">
-                  <li className="nav-item">
-                    <NavLink exact to="/dashboard" activeClassName="active">Home</NavLink>
-                  </li>
-                  <li className="nav-item">
-                    <NavLink to="/dashboard/transactions" activeClassName="active">Transactions</NavLink>
-                  </li>
+                   { dashboardRoutes.map((route, index) => (
+                    <li className="nav-item mb-2" key={index}>
+                      <NavLink exact={route.exact} to={route.path} activeClassName="active">
+                        <Icon
+                          font={route.font}
+                          name={route.fontName}
+                          color="inherit"
+                          size={isMobile ? 20 : 16}
+                          // style={{}}
+                        />
+                        { isMobile || <span className="ml-1">{route.name}</span> }
+                      </NavLink>
+                    </li>
+                    )) }
                 </ul>
               </div>
 
-              <div className="content col-12">
+              <div className={`content ${isMobile ? 'col-11' : 'col-10'}`}>
                 {dashboardRoutes.map((route, index) => (
                   <Route
                     key={index}

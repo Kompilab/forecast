@@ -124,7 +124,7 @@ class Transactions extends Component {
         <section className="all-transactions mb-3">
           <div className="header mb-3">
             <div className="">
-              <h5>Transactions <span class="badge badge-light">{transactions && transactions.length}</span></h5>
+              <h5>Transactions <span className="badge badge-light">{transactions && transactions.length}</span></h5>
               <p className="text-muted d-none"><em>as of 12:45 pm, 2019-04-28</em></p>
             </div>
 
@@ -196,7 +196,7 @@ class Transactions extends Component {
               loading ? (
                 <div className="text-center">
                   <div className="spinner-grow text-primary" role="status" aria-hidden="true">
-                    <span class="sr-only">Loading transactions...</span>
+                    <span className="sr-only">Loading transactions...</span>
                   </div>
                 </div>
               ) : (

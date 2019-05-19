@@ -1,13 +1,33 @@
 .dashboard {
   padding: 1rem;
 
+  .row {
+    .side-nav {
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+  }
+
   ul.nav-items {
     list-style: none;
     padding: 0;
 
     .nav-item {
-      a.active {
-        color: red;
+      a {
+        color: #6e6b6b;
+        display: flex;
+
+        span {
+          font-size: 1.125rem;
+        }
+
+        &:hover {
+          text-decoration: none;
+        }
+
+        &.active {
+          color: #00777f;
+        }
       }
     }
   }

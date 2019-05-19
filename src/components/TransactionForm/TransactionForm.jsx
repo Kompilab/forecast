@@ -227,7 +227,7 @@ class TransactionForm extends Component {
               {
                 loading ? (
                   <div>
-                    <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                    <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
                     Saving...
                   </div>
                 ) : (

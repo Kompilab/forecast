@@ -23,12 +23,12 @@ class Navbar extends Component {
 
   render() {
     const { titleOverride } = this.state;
-    const { title } = this.props;
+    const { title, hideMenu } = this.props;
 
     return (
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
         {
-          userAuth.isAuthenticated ? (
+          userAuth.isAuthenticated && !hideMenu ? (
             <div className="mr-2 menu-dropdowns">
               <div id="menuDropdown" className="menu-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <Icon

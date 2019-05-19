@@ -112,8 +112,7 @@ class Login extends Component {
               {
                 loading ? (
                   <div>
-                    <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
-                    Please wait...
+                    <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
                   </div>
                 ) : (
                   <div>Sign In</div>
