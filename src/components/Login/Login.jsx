@@ -33,6 +33,7 @@ class Login extends Component {
     e.preventDefault();
 
     userAuth.authenticate(this.prepData(this.state), (redirect, error='') => {
+      window.location.reload()
       this.setState({
         redirectToReferrer: redirect,
         error: error,

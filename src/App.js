@@ -4,8 +4,8 @@ import userAuth from './services/authenticate';
 
 import Auth from './pages/Auth';
 import Home from './pages/Home';
-import Dashboard from './pages/Dashboard';
 import NotFound from './pages/NotFound';
+import Dashboard from './pages/Dashboard';
 
 class App extends Component {
   render() {
