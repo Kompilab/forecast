@@ -122,7 +122,7 @@ class Transactions extends Component {
           </div>
         </section>
 
-        <section className="all-transactions mb-3">
+        <section className="all-transactions fo-section mb-3">
           <div className="header mb-3">
             <div className="">
               <h5>Transactions <span className="badge badge-light">{transactions && transactions.length}</span></h5>

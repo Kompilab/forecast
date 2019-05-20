@@ -46,3 +46,13 @@ a:hover {
   color: #00777f;
   text-decoration: none;
 }
+
+.fo-section .header {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+}
+
+.fo-section h5 {
+  margin: 0;
+}
