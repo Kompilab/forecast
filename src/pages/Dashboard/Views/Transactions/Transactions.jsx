@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import './Transactions.scss';
 import Icon from 'react-web-vector-icons';
 import TransactionForm from '../../../../components/TransactionForm';
@@ -168,7 +169,7 @@ class Transactions extends Component {
                     />
                   </button>
                   <div className="dropdown-menu dropdown-menu-right" aria-labelledby="tx-more-options">
-                    <a className="dropdown-item" href="#">Manage Categories</a>
+                    <Link to="/dashboard/categories" className="dropdown-item">Manage Categories</Link>
                     <a className="dropdown-item" href="#">Import Transactions</a>
                     <a className="dropdown-item" href="#">Export Summary</a>
                   </div>

@@ -24,6 +24,21 @@ class Navbar extends Component {
   render() {
     const { titleOverride } = this.state;
     const { title, hideMenu } = this.props;
+    const dashboardRoutes = [
+      {
+        name: 'Dashboard',
+        path: '/dashboard',
+        exact: true
+      },
+      {
+        name: 'Transactions',
+        path: '/dashboard/transactions'
+      },
+      {
+        name: 'Categories',
+        path: '/dashboard/categories'
+      }
+    ];
 
     return (
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -40,8 +55,16 @@ class Navbar extends Component {
                 />
               </div>
               <div className="dropdown-menu" aria-labelledby="menuDropdown">
-                <NavLink to="/dashboard" exact className="dropdown-item" activeClassName="active">Dashboard</NavLink>
-                <NavLink to="/dashboard/transactions" className="dropdown-item" activeClassName="active">Transactions</NavLink>
+                { dashboardRoutes.map((route, index) => (
+                  <NavLink
+                    key={index}
+                    to={route.path}
+                    exact={route.exact}
+                    className="dropdown-item"
+                    activeClassName="active">
+                    {route.name}
+                  </NavLink>
+                ))}
               </div>
             </div>
           ) : null

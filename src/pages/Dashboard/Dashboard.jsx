@@ -7,22 +7,31 @@ import Icon from 'react-web-vector-icons';
 // import dashboard views
 import DHome from './Views/DHome';
 import Transactions from './Views/Transactions';
+import Categories from './Views/Categories';
 
 const dashboardRoutes = [
   {
     name: 'Dashboard',
-    path: "/dashboard",
+    path: '/dashboard',
     exact: true,
     main: () => <DHome />,
     font: 'MaterialIcons',
-    fontName: 'dashboard'
+    fontName: 'dashboard',
+    show: true
   },
   {
     name: 'Transactions',
-    path: "/dashboard/transactions",
+    path: '/dashboard/transactions',
     main: () => <Transactions />,
     font: 'MaterialIcons',
-    fontName: 'format-list-bulleted'
+    fontName: 'format-list-bulleted',
+    show: true
+  },
+  {
+    name: 'Categories',
+    path: '/dashboard/categories',
+    main: () => <Categories />,
+    show: false
   }
 ];
 
@@ -67,7 +76,7 @@ class Dashboard extends Component {
               <div className={`side-nav ${isMobile ? 'col-1' : 'col-2'}`}>
                 <ul className="nav-items">
                    { dashboardRoutes.map((route, index) => (
-                    <li className="nav-item mb-2" key={index}>
+                    route.show && <li className="nav-item mb-2" key={index}>
                       <NavLink exact={route.exact} to={route.path} activeClassName="active">
                         <Icon
                           font={route.font}
