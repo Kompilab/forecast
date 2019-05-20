@@ -62,24 +62,32 @@ class Categories extends Component {
     }
 
     const list = data.map((item, index) => (
-      <div class="card" key={index}>
-        <div class="card-header" id={`heading${index}`} data-toggle="collapse" data-target={`#collapse${index}`} aria-expanded="true" aria-controls={`collapse${index}`}>
-          {item.parent_category.name}
+      <div className="card" key={index}>
+        <div className="card-header d-flex align-items-center justify-content-between" id={`heading${index}`} data-toggle="collapse" data-target={`#collapse${index}`} aria-expanded="true" aria-controls={`collapse${index}`}>
+          {item.parent_category.name} <span className="badge badge-info badge-pill">{item.categories.length}</span>
         </div>
 
-        <div id={`collapse${index}`} class="collapse" aria-labelledby={`heading${index}`} data-parent="#accordionCategories">
-          <div class="card-body">
-            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+        <div id={`collapse${index}`} className="collapse" aria-labelledby={`heading${index}`} data-parent="#accordionCategories">
+          <div className="card-body">
+            { this.buildSubList(item.categories) }
           </div>
         </div>
       </div>
     ))
 
     return (
-      <div class="accordion" id="accordionCategories">
+      <div className="accordion" id="accordionCategories">
         {list}
       </div>
     )
+  }
+
+  buildSubList(data) {
+    if (!data.length) return;
+
+    return data.map((item, index) => (
+      <span key={index} className="badge badge-pill badge-light">{ item.name }</span>
+    ))
   }
 
   render() {
