@@ -55,7 +55,7 @@ const apiRoutes = {
       path: '/api/v1/financial_transactions/payment_methods'
     }
   },
-  transactionCalculations: (id) => {
+  transactionCalculations: () => {
     return {
       method: 'GET',
       path: `/api/v1/financial_transactions/${currentUser.id}/calculations`

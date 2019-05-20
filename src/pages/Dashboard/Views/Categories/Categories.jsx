@@ -1,17 +1,26 @@
 import React, { Component } from 'react';
 import './Categories.scss';
-import userAuth from '../../../../services/authenticate';
 import Icon from 'react-web-vector-icons';
+import categories from '../../../../services/categories';
+import FormattersHelpers from '../../../../helpers/formatter_helpers';
 
 class Categories extends Component {
   constructor(props) {
     super(props)
 
     this.state = {
-      formOpen: false
+      formOpen: false,
+      fetchingData: false,
+      categories: [],
+      errors: null
     }
 
+    this._fetchData = this._fetchData.bind(this);
     this.handleToggleForm = this.handleToggleForm.bind(this);
+  }
+
+  componentDidMount() {
+    this._fetchData()
   }
 
   handleToggleForm() {
@@ -20,8 +29,30 @@ class Categories extends Component {
     }))
   }
 
+  _fetchData() {
+    this.setState({
+      fetchingData: true, errors: null
+    });
+
+    categories.getAll((success, response) => {
+      if (success) {
+        this.setState({
+          fetchingData: false,
+          categories: response
+        })
+      } else {
+        this.setState({
+          fetchingData: false,
+          errors: response
+        })
+      }
+    })
+  }
+
   render() {
-    const { formOpen } = this.state;
+    const { formOpen, errors, fetchingData, categories } = this.state;
+
+    console.log(this.state)
 
     return (
       <section className="all-categories fo-section">
@@ -54,6 +85,27 @@ class Categories extends Component {
               </span>
             </button>
           </div>
+        </div>
+
+        {
+          errors ? (
+            <div>{FormattersHelpers.formatErrors(errors)}</div>
+          ): null
+        }
+
+        <div className="categories-list">
+          {
+            fetchingData ? (
+              <div className="text-center">
+                <div className="spinner-grow text-primary" role="status" aria-hidden="true">
+                  <span className="sr-only">Loading categories...</span>
+                </div>
+              </div>
+            ) : (
+              <div>
+              </div>
+            )
+          }
         </div>
       </section>
     )
