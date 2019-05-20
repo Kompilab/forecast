@@ -70,42 +70,40 @@ class Transactions extends Component {
       )
     }
 
-    if (!false) {
-      return (
-        <table className="custom-table">
-          <thead>
-            <tr>
-              <th>Date</th>
-              <th>Transaction</th>
-              <th>Amount</th>
-              <th>Type</th>
-              <th>Category</th>
-              <th>Payment Method</th>
-              <th>Source</th>
-            </tr>
-          </thead>
-          <tbody>
-            {data.map((tx, index) => {
-              return (
-                  <tr
-                    className={`clickable`}
-                    onClick={() => console.log('i click')}
-                    key={index}>
-                    <td data-label="Date">{tx.transaction_date}</td>
-                    <td data-label="Transaction">{tx.description}</td>
-                    <td data-label="Amount" dangerouslySetInnerHTML={{ __html: FormattersHelpers.formatAmount(tx.amount) }}></td>
-                    <td data-label="Type">{tx.transaction_type}</td>
-                    <td data-label="Category">{tx.category_name}</td>
-                    <td data-label="Payment Method">{tx.payment_method}</td>
-                    <td data-label="Source">{tx.source}</td>
-                  </tr>
-                )
-              }
-            )}
-          </tbody>
-        </table>
-      )
-    }
+    return (
+      <table className="custom-table">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Transaction</th>
+            <th>Amount</th>
+            <th>Type</th>
+            <th>Category</th>
+            <th>Payment Method</th>
+            <th>Source</th>
+          </tr>
+        </thead>
+        <tbody>
+          {data.map((tx, index) => {
+            return (
+                <tr
+                  className={`clickable`}
+                  onClick={() => console.log('i click')}
+                  key={index}>
+                  <td data-label="Date">{tx.transaction_date}</td>
+                  <td data-label="Transaction">{tx.description}</td>
+                  <td data-label="Amount" dangerouslySetInnerHTML={{ __html: FormattersHelpers.formatAmount(tx.amount) }}></td>
+                  <td data-label="Type">{tx.transaction_type}</td>
+                  <td data-label="Category">{tx.category_name}</td>
+                  <td data-label="Payment Method">{tx.payment_method}</td>
+                  <td data-label="Source">{tx.source}</td>
+                </tr>
+              )
+            }
+          )}
+        </tbody>
+      </table>
+    )
   }
 
   render() {
