@@ -82,7 +82,7 @@ class Dashboard extends Component {
                           font={route.font}
                           name={route.fontName}
                           color="inherit"
-                          size={isMobile ? 20 : 16}
+                          size={isMobile ? 30 : 16}
                           // style={{}}
                         />
                         { isMobile || <span className="ml-1">{route.name}</span> }
