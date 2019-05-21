@@ -3,6 +3,7 @@ import './Categories.scss';
 import Icon from 'react-web-vector-icons';
 import categories from '../../../../services/categories';
 import FormattersHelpers from '../../../../helpers/formatter_helpers';
+import CategoryForm from '../../../../components/CategoryForm';
 
 class Categories extends Component {
   constructor(props) {
@@ -137,6 +138,15 @@ class Categories extends Component {
             </button>
           </div>
         </div>
+
+        {
+          formOpen ? (
+            <CategoryForm
+              allCategories={categories}
+              refresh={this._fetchData}
+              toggleForm={this.handleToggleForm} />
+          ) : null
+        }
 
         {
           errors ? (
