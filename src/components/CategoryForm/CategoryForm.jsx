@@ -20,8 +20,9 @@ class CategoryForm extends Component {
     this._loadData = this._loadData.bind(this);
     this._toggleForm = this._toggleForm.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    this._handleCreateTransaction = this._handleCreateTransaction.bind(this);
+    this._handleCreate = this._handleCreate.bind(this);
     this._refreshList = this._refreshList.bind(this);
+    this.disableSubmit = this.disableSubmit.bind(this);
   }
 
   componentDidMount() {
@@ -54,7 +55,7 @@ class CategoryForm extends Component {
     })
   }
 
-  _handleCreateTransaction(e) {
+  _handleCreate(e) {
     e.preventDefault();
     this.setState({loading: true, errors: null});
 
@@ -92,7 +93,6 @@ class CategoryForm extends Component {
       errors,
       loading,
       categories,
-      newCategory,
       selectedParent
     } = this.state;
     const errorClass = errors ? 'is-invalid' : '';
