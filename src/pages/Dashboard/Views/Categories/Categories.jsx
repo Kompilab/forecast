@@ -64,7 +64,17 @@ class Categories extends Component {
     const list = data.map((item, index) => (
       <div className="card" key={index}>
         <div className="card-header d-flex align-items-center justify-content-between" id={`heading${index}`} data-toggle="collapse" data-target={`#collapse${index}`} aria-expanded="true" aria-controls={`collapse${index}`}>
-          {item.parent_category.name} <span className="badge badge-info badge-pill">{item.categories.length}</span>
+          {item.parent_category.name}
+
+          <div>
+            <span className="badge badge-info badge-pill mr-3">{item.categories.length}</span>
+            <Icon
+              font="Entypo"
+              name="chevron-thin-down"
+              color='#929292'
+              size={15}
+            />
+          </div>
         </div>
 
         <div id={`collapse${index}`} className="collapse" aria-labelledby={`heading${index}`} data-parent="#accordionCategories">

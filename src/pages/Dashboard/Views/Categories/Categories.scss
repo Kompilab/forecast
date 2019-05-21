@@ -1,0 +1,32 @@
+.all-categories {
+  .categories-list {
+    .accordion {
+      .card {
+        border: 1px solid rgba(0, 0, 0, 0.125);
+        border-radius: 0.25rem;
+        margin-bottom: 5px;
+
+        .card-header {
+          background-color: rgba(0, 0, 0, 0.01);
+          transition: all .25s ease-in-out;
+
+          &:hover {
+            color: #00777f;
+            cursor: pointer;
+            transition: all .25s ease-in-out;
+          }
+        }
+
+        .card-body {
+          .badge {
+            border: .5px solid #dcdcdc;
+            font-size: 85%;
+            font-weight: normal;
+            margin-bottom: 5px;
+            margin-right: 5px;
+          }
+        }
+      }
+    }
+  }
+}
