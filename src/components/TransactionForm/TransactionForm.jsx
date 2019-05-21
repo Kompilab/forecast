@@ -122,8 +122,6 @@ class TransactionForm extends Component {
     } = this.state;
     const errorClass = errors ? 'is-invalid' : '';
 
-    console.log('==> TransactionForm: ', this.state)
-
     return (
       <div className="add-transaction mb-3">
         <form className="transaction-form">

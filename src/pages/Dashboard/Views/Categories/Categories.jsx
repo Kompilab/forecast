@@ -105,8 +105,6 @@ class Categories extends Component {
   render() {
     const { formOpen, errors, fetchingData, categories } = this.state;
 
-    console.log(this.state)
-
     return (
       <section className="all-categories fo-section">
         <div className="header mb-3">

@@ -49,6 +49,12 @@ const apiRoutes = {
       path: '/api/v1/parent_categories?with_categories=true'
     }
   },
+  createCategory: () => {
+    return {
+      method: 'POST',
+      path: '/api/v1/categories'
+    }
+  },
   paymentMethods: () => {
     return {
       method: 'GET',

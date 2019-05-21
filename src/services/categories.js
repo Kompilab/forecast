@@ -16,29 +16,29 @@ const categories = {
       console.log('ERROR:GetAllParentCategoriesWithCategories - ', error)
     }
   },
-  // async create(data, cb) {
-  //   try {
-  //     const payload = formatPayload(data);
-  //     const txRoute = apiRoutes.createTransaction();
+  async create(data, cb) {
+    try {
+      const payload = formatPayload(data);
+      const createRoute = apiRoutes.createCategory();
 
-  //     const response = await httpInterface.postData(txRoute.path, txRoute.method, payload);
-  //     const resData = await response.json();
+      const response = await httpInterface.postData(createRoute.path, createRoute.method, payload);
+      const resData = await response.json();
 
-  //     if (response.ok) {
-  //       cb(true, resData);
-  //     } else {
-  //       cb(false, resData)
-  //     }
-  //   } catch (error) {
-  //     console.log('ERROR:CreateTransaction - ', error)
-  //   }
-  // }
+      if (response.ok) {
+        cb(true, resData);
+      } else {
+        cb(false, resData)
+      }
+    } catch (error) {
+      console.log('ERROR:CreateCategory - ', error)
+    }
+  }
 };
 
-// const formatPayload = data => {
-//   return {
-//     financial_transactions: data
-//   }
-// };
+const formatPayload = data => {
+  return {
+    category: data
+  }
+};
 
 export default categories

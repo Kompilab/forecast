@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './CategoryForm.scss';
+import categories from '../../services/categories';
 
 class CategoryForm extends Component {
   constructor(props) {
@@ -9,7 +10,6 @@ class CategoryForm extends Component {
       categories: [],
       loading: false,
       errors: null,
-      formOpen: false,
 
       selectedParent: '',
       newParent: '',
@@ -55,32 +55,28 @@ class CategoryForm extends Component {
   }
 
   _handleCreateTransaction(e) {
-    // e.preventDefault();
-    // this.setState({loading: true, errors: null});
+    e.preventDefault();
+    this.setState({loading: true, errors: null});
 
-    // transactions.create(this.prepData(this.state), (success, response='') => {
-    //   if (success) {
-    //     this._refreshTransactions();
-    //     this._toggleForm();
-    //   } else {
-    //     this.setState({
-    //       errors: response,
-    //       loading: false
-    //     });
-    //   }
-    // })
+    categories.create(this.prepData(this.state), (success, response='') => {
+      if (success) {
+        this._refreshList();
+        this._toggleForm();
+      } else {
+        this.setState({
+          errors: response,
+          loading: false
+        });
+      }
+    })
   }
 
   prepData(raw) {
     return {
-      description: raw.description,
-      amount: raw.amount,
-      transaction_type: raw.type,
-      transaction_date: raw.date,
-      category_id: raw.selectedCategoryId,
-      source: 'manual',
-      payment_method: raw.paymentMethod,
-      notes: raw.notes
+      parent_category_id: raw.selectedParent,
+      new_parent_name: raw.newParent,
+      name: raw.newCategory,
+      description: raw.categoryDescription
     }
   }
 
@@ -100,8 +96,6 @@ class CategoryForm extends Component {
       selectedParent
     } = this.state;
     const errorClass = errors ? 'is-invalid' : '';
-
-    console.log('==> CategoryForm: ', this.state)
 
     return (
       <div className="add-category mb-3">
