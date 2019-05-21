@@ -4,6 +4,7 @@ import Icon from 'react-web-vector-icons';
 import categories from '../../../../services/categories';
 import FormattersHelpers from '../../../../helpers/formatter_helpers';
 import CategoryForm from '../../../../components/CategoryForm';
+import StringHelpers from '../../../../helpers/string_helpers';
 
 class Categories extends Component {
   constructor(props) {
@@ -65,7 +66,7 @@ class Categories extends Component {
     const list = data.map((item, index) => (
       <div className="card" key={index}>
         <div className="card-header d-flex align-items-center justify-content-between" id={`heading${index}`} data-toggle="collapse" data-target={`#collapse${index}`} aria-expanded="true" aria-controls={`collapse${index}`}>
-          {item.parent_category.name}
+          { StringHelpers.sentenceCase(item.parent_category.name) }
 
           <div>
             <span className="badge badge-info badge-pill mr-3">{item.categories.length}</span>

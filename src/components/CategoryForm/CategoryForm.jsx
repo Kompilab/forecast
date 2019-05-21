@@ -1,9 +1,5 @@
 import React, { Component } from 'react';
 import './CategoryForm.scss';
-import moment from 'moment';
-import transactions from '../../services/transactions';
-import globalRequests from '../../services/global';
-import StringHelpers from '../../helpers/string_helpers';
 
 class CategoryForm extends Component {
   constructor(props) {
@@ -17,7 +13,8 @@ class CategoryForm extends Component {
 
       selectedParent: '',
       newParent: '',
-      newCategory: ''
+      newCategory: '',
+      categoryDescription: ''
     };
 
     this._loadData = this._loadData.bind(this);
@@ -87,6 +84,13 @@ class CategoryForm extends Component {
     }
   }
 
+  disableSubmit() {
+    const { loading, newCategory, selectedParent, newParent } = this.state;
+    const hasNewParent = selectedParent === 'isNew' && !newParent.length;
+
+    return loading || !selectedParent.length || hasNewParent || !newCategory.length
+  }
+
   render() {
     const {
       errors,
@@ -115,7 +119,7 @@ class CategoryForm extends Component {
           </div>
 
           {
-            (selectedParent == 'isNew') && (
+            (selectedParent === 'isNew') && (
               <div className="form-group">
                 <input
                   id="newParentName"
@@ -138,8 +142,18 @@ class CategoryForm extends Component {
               placeholder="Enter a new category" required />
           </div>
 
+          <div className="form-group">
+            <input
+              id="categoryDescription"
+              type="text"
+              name="categoryDescription"
+              className={`form-control ${errorClass}`}
+              onChange={this.handleChange}
+              placeholder="Description (optional)" />
+          </div>
+
           <div className="actions">
-            <button onClick={this._handleCreateTransaction} type="submit" className="btn btn-primary btn-fo-primary btn-block" disabled={loading || !newCategory.length}>
+            <button onClick={this._handleCreateTransaction} type="submit" className="btn btn-primary btn-fo-primary btn-block" disabled={this.disableSubmit()}>
               {
                 loading ? (
                   <div>
