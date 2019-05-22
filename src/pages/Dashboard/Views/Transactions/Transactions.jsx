@@ -111,12 +111,16 @@ class Transactions extends Component {
 
     return (
       <div>
-        <section className="at-a-glance mb-3">
-          <div>
-            Income: <span dangerouslySetInnerHTML={{ __html: FormattersHelpers.formatAmount(calculations.income) }}></span>
-          </div>
-          <div>
-            Expenses: <span dangerouslySetInnerHTML={{ __html: FormattersHelpers.formatAmount(calculations.expenses) }}></span>
+        <section className="at-a-glance mb-5 container-fluid">
+          <div className="row">
+            <div className="col summary-card income">
+              <div className="type">Income</div>
+              <div className="amount income" dangerouslySetInnerHTML={{ __html: FormattersHelpers.formatAmount(calculations.income) }}></div>
+            </div>
+            <div className="col summary-card expense">
+              <div className="type">Expenses</div>
+              <div className="amount expense" dangerouslySetInnerHTML={{ __html: FormattersHelpers.formatAmount(calculations.expenses) }}></div>
+            </div>
           </div>
         </section>
 
