@@ -147,7 +147,7 @@ class CategoryForm extends Component {
           </div>
 
           <div className="actions">
-            <button onClick={this._handleCreateTransaction} type="submit" className="btn btn-primary btn-fo-primary btn-block" disabled={this.disableSubmit()}>
+            <button onClick={this._handleCreate} type="submit" className="btn btn-primary btn-fo-primary btn-block" disabled={this.disableSubmit()}>
               {
                 loading ? (
                   <div>
