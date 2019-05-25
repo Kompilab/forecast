@@ -15,13 +15,22 @@ class BankStatements extends Component {
       supportedBanks: [],
       loading: false,
       errors: null,
+
+      selectedBank: ''
     };
 
     this._fetchData = this._fetchData.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
   componentDidMount() {
     this._fetchData()
+  }
+
+  handleChange(e) {
+    this.setState({
+      [e.target.name]: e.target.value
+    })
   }
 
   _fetchData() {
@@ -67,14 +76,39 @@ class BankStatements extends Component {
   }
 
   render() {
-    const { loading, bankStatements, errors } = this.state;
+    const { loading, bankStatements, errors, supportedBanks, selectedBank } = this.state;
+    let allowedFormats = '';
+
+    if (selectedBank) {
+      allowedFormats = supportedBanks[selectedBank].formats
+    }
+
+    console.log(this.state)
 
     return (
       <div>
         <section className="upload mb-5 container-fluid">
           <div className="row">
-            <div className="col-sm-7 summary-card p-3">
+            <div className="col-12 summary-card p-3">
               <h5>Upload bank statement</h5>
+
+              <form className="upload-form">
+                <div className="form-row">
+                  <div className="col-sm-4">
+                    <select className="custom-select" id="bankSelect" name="selectedBank" onChange={this.handleChange} required>
+                      <option value="">Choose your bank</option>
+                      {
+                        supportedBanks && supportedBanks.map((bank, index) => {
+                          return <option value={index} key={index}>{bank.name}</option>
+                        })
+                      }
+                    </select>
+                    { selectedBank && <small id="bankHelp" className="form-text text muted my-2">Allowed file formats for this bank: {allowedFormats}</small> }
+                  </div>
+                  <div className="col-sm-4">two</div>
+                  <div className="col-sm-4">three</div>
+                </div>
+              </form>
             </div>
           </div>
         </section>
@@ -83,7 +117,6 @@ class BankStatements extends Component {
           <div className="header mb-3">
             <div className="">
               <h5>Bank Statements <span className="badge badge-light">{bankStatements && bankStatements.length}</span></h5>
-              <p className="text-muted d-none"><em>as of 12:45 pm, 2019-04-28</em></p>
             </div>
           </div>
 
