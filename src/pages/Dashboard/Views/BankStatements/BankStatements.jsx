@@ -16,11 +16,14 @@ class BankStatements extends Component {
       loading: false,
       errors: null,
 
-      selectedBank: ''
+      selectedBank: '',
+      uploadedFile: '',
+      filePassword: ''
     };
 
     this._fetchData = this._fetchData.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.loadStatements = this.loadStatements.bind(this);
   }
 
   componentDidMount() {
@@ -59,7 +62,7 @@ class BankStatements extends Component {
     })
   }
 
-  loadTransactions(data) {
+  loadStatements(data) {
     data = data || [];
 
     if (!data.length) {
@@ -76,7 +79,7 @@ class BankStatements extends Component {
   }
 
   render() {
-    const { loading, bankStatements, errors, supportedBanks, selectedBank } = this.state;
+    const { loading, bankStatements, errors, supportedBanks, selectedBank, uploadedFile } = this.state;
     let allowedFormats = '';
 
     if (selectedBank) {
@@ -95,7 +98,7 @@ class BankStatements extends Component {
               <form className="upload-form">
                 <div className="form-row">
                   <div className="col-sm-4">
-                    <select className="custom-select" id="bankSelect" name="selectedBank" onChange={this.handleChange} required>
+                    <select className="custom-select mb-2" id="bankSelect" name="selectedBank" onChange={this.handleChange} required>
                       <option value="">Choose your bank</option>
                       {
                         supportedBanks && supportedBanks.map((bank, index) => {
@@ -103,10 +106,22 @@ class BankStatements extends Component {
                         })
                       }
                     </select>
-                    { selectedBank && <small id="bankHelp" className="form-text text muted my-2">Allowed file formats for this bank: {allowedFormats}</small> }
+                    { selectedBank && <small id="bankHelp" className="form-text text muted mb-2">Allowed file formats for this bank: {allowedFormats}</small> }
                   </div>
-                  <div className="col-sm-4">two</div>
-                  <div className="col-sm-4">three</div>
+                  <div className="col-sm-4">
+                    <div className="input-group mb-2">
+                      <div className="custom-file">
+                        <input name="uploadedFile" type="file" accept=".pdf,.xls,.xlsx" className="custom-file-input" id="chooseStatementFile" onChange={this.handleChange} aria-describedby="inputGroupFileAddonBankStatement" />
+                        <label className="custom-file-label" htmlFor="inputGroupFile01">
+                          { uploadedFile ? uploadedFile : 'Choose file' }</label>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col-sm-4">
+                    <div className="form-group mb-2">
+                      <input id="filePassword" type="password" name="filePassword" className="form-control" onChange={this.handleChange} placeholder="File password (optional)" />
+                    </div>
+                  </div>
                 </div>
               </form>
             </div>
@@ -136,7 +151,7 @@ class BankStatements extends Component {
                 </div>
               ) : (
                 <div>
-                  {/* { this.loadTransactions(transactions) } */}
+                  { this.loadStatements(bankStatements) }
                 </div>
               )
             }

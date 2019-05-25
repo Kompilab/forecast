@@ -1,9 +1,15 @@
 .summary-card {
   border-left: 3px solid transparent;
   border-radius: .25rem;
-  box-shadow: 0 10px 50px rgba(0,40,130,0.25);
+  box-shadow: 0 5px 20px rgba(0,40,130,0.25);
   margin: 0 20px 10px 0;
   padding: 5px 20px;
+  transition: all ease-in-out .35s;
+}
+
+.summary-card:hover {
+  box-shadow: 0 10px 50px rgba(0,40,130,0.25);
+  transition: all ease-in-out .35s;
 }
 
 .summary-card.income {
