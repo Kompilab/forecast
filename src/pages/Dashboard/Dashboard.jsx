@@ -8,6 +8,7 @@ import Icon from 'react-web-vector-icons';
 import DHome from './Views/DHome';
 import Transactions from './Views/Transactions';
 import Categories from './Views/Categories';
+import BankStatements from './Views/BankStatements';
 
 const dashboardRoutes = [
   {
@@ -25,6 +26,14 @@ const dashboardRoutes = [
     main: () => <Transactions />,
     font: 'MaterialIcons',
     fontName: 'format-list-bulleted',
+    show: true
+  },
+  {
+    name: 'Bank Statements',
+    path: '/dashboard/bank-statements',
+    main: () => <BankStatements />,
+    font: 'MaterialCommunityIcons',
+    fontName: 'bank',
     show: true
   },
   {

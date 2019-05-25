@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import './DHome.scss';
 import userAuth from '../../../../services/authenticate';
 // import Icon from 'react-web-vector-icons';
@@ -23,13 +24,13 @@ class DHome extends Component {
         <div className="row">
           <div className="col-sm-3 d-card">
             <h6>Import Bank Statement</h6>
-            <button className="btn btn-light btn-sm">Upload Statement</button>
+            <Link to="/dashboard/bank-statements" className="btn btn-light btn-sm">Upload Statement</Link>
 
             <p className="text-center my-4">--- or ---</p>
 
             <h6>Enter transactions manually</h6>
             <p>This should only be cash transactions</p>
-            <button className="btn btn-light btn-sm">My Transactions</button>
+            <Link to="/dashboard/transactions" className="btn btn-light btn-sm">My Transactions</Link>
           </div>
           <div className="col-sm-3 d-card">
             Income
