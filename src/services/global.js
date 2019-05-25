@@ -43,6 +43,27 @@ const globalRequests = {
     } catch (error) {
       console.log('ERROR:initTransactionFormData - ', error)      
     }
+  },
+  async initBankStatements(cb) {
+    try {
+      const allResponses = await httpInterface.processMultiple(
+        [apiRoutes.supportedBanks()]
+      );
+
+      let isSuccess = false;
+
+      const resData = allResponses.map(async (response) => {
+        if (response.ok) {
+          isSuccess = true;
+        }
+
+        return await response.json()
+      })
+
+      cb(isSuccess, resData)
+    } catch (error) {
+      console.log('ERROR:initBankStatements - ', error)
+    }
   }
 };
 

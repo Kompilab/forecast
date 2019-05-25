@@ -12,6 +12,7 @@ class BankStatements extends Component {
 
     this.state = {
       bankStatements: [],
+      supportedBanks: [],
       loading: false,
       errors: null,
     };
@@ -24,32 +25,32 @@ class BankStatements extends Component {
   }
 
   _fetchData() {
-    // this.setState({loading: true});
+    this.setState({loading: true});
 
-    // globalRequests.transactionsInitData((success, responses ) => {
-    //   this.setState({
-    //     loading: false
-    //   });
+    globalRequests.initBankStatements((success, responses ) => {
+      this.setState({
+        loading: false
+      });
 
-    //   if (success) {
-    //     for(let i=0; i < responses.length; i++) {
-    //       let states = ['transactions', 'calculations'];
+      if (success) {
+        for(let i=0; i < responses.length; i++) {
+          let states = ['supportedBanks'];
 
-    //       responses[i].then(data => {
-    //         this.setState({
-    //           [states[i]]: data
-    //         })
-    //       })
-    //     }
-    //   } else {
-    //     this.setState({
-    //       errors: responses
-    //     });
-    //   }
-    // })
+          responses[i].then(data => {
+            this.setState({
+              [states[i]]: data
+            })
+          })
+        }
+      } else {
+        this.setState({
+          errors: responses
+        });
+      }
+    })
   }
 
-  loadTransactions(data, formOpen) {
+  loadTransactions(data) {
     data = data || [];
 
     if (!data.length) {

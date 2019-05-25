@@ -66,6 +66,12 @@ const apiRoutes = {
       method: 'GET',
       path: `/api/v1/financial_transactions/${currentUser.id}/calculations`
     }
+  },
+  supportedBanks: () => {
+    return {
+      method: 'GET',
+      path: '/api/v1/import_statements/supported_banks'
+    }
   }
 };
 
