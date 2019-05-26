@@ -35,6 +35,10 @@ class Navbar extends Component {
         path: '/dashboard/transactions'
       },
       {
+        name: 'Bank Statements',
+        path: '/dashboard/bank-statements'
+      },
+      {
         name: 'Categories',
         path: '/dashboard/categories'
       }
