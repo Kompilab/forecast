@@ -17,12 +17,13 @@ class BankStatements extends Component {
       errors: null,
 
       selectedBank: '',
-      uploadedFile: '',
+      uploadedFile: {},
       filePassword: ''
     };
 
     this._fetchData = this._fetchData.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.handleOnFileChange = this.handleOnFileChange.bind(this);
     this.loadStatements = this.loadStatements.bind(this);
   }
 
@@ -33,6 +34,12 @@ class BankStatements extends Component {
   handleChange(e) {
     this.setState({
       [e.target.name]: e.target.value
+    })
+  }
+
+  handleOnFileChange(e) {
+    this.setState({
+      [e.target.name]: e.target.files[0]
     })
   }
 
@@ -111,9 +118,9 @@ class BankStatements extends Component {
                   <div className="col-sm-4">
                     <div className="input-group mb-2">
                       <div className="custom-file">
-                        <input name="uploadedFile" type="file" accept=".pdf,.xls,.xlsx" className="custom-file-input" id="chooseStatementFile" onChange={this.handleChange} aria-describedby="inputGroupFileAddonBankStatement" />
+                        <input name="uploadedFile" type="file" accept=".pdf,.xls,.xlsx" className="custom-file-input" id="chooseStatementFile" onChange={this.handleOnFileChange} aria-describedby="inputGroupFileAddonBankStatement" />
                         <label className="custom-file-label" htmlFor="inputGroupFile01">
-                          { uploadedFile ? uploadedFile : 'Choose file' }</label>
+                          { !uploadedFile.name ? 'Choose file' : uploadedFile.name }</label>
                       </div>
                     </div>
                   </div>
