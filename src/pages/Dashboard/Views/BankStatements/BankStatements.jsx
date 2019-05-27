@@ -4,60 +4,13 @@ import FormattersHelpers from '../../../../helpers/formatter_helpers';
 import globalRequests from '../../../../services/global';
 import bankStatements from '../../../../services/bank_statements';
 import moment from 'moment';
-import gtbImg from '../../../../assets/images/banks/gtbank.png';
-import accessImg from '../../../../assets/images/banks/access-bank.png';
+import gtbImg from '../../../../assets/images/banks/gtbank.jpg';
+import accessImg from '../../../../assets/images/banks/accessbank.png';
+import ubaImg from '../../../../assets/images/banks/uba.png';
+import ecobankImg from '../../../../assets/images/banks/ecobank.png';
+import firstbankImg from '../../../../assets/images/banks/firstbank-square.png';
+import heritagebankImg from '../../../../assets/images/banks/heritage-bank.jpeg';
 import DateHelpers from '../../../../helpers/date_helpers';
-
-const testData = [
-  {
-    "id": 1,
-    "user_id": 1,
-    "account_name": "ADEBAYO, FIYINFOLUWA SIMEON",
-    "account_number": "8124",
-    "bank_name": "Guaranty Trust Bank",
-    "bank_key": "gtb",
-    "from_date": "2019-01-03",
-    "to_date": "2019-02-22",
-    "transactions": [
-      {}
-    ],
-    "metadata": null,
-    "created_at": "2019-05-27T11:19:36.409Z",
-    "updated_at": "2019-05-27T11:19:36.409Z"
-  },
-  {
-    "id": 2,
-    "user_id": 1,
-    "account_name": "ADEBAYO, FIYINFOLUWA",
-    "account_number": "1234",
-    "bank_name": "Access Bank",
-    "bank_key": "accessbank",
-    "from_date": "2019-05-01",
-    "to_date": "2019-05-22",
-    "transactions": [
-      {},{}
-    ],
-    "metadata": null,
-    "created_at": "2019-04-27T11:19:36.409Z",
-    "updated_at": "2019-05-27T11:19:36.409Z"
-  },
-  {
-    "id": 3,
-    "user_id": 1,
-    "account_name": "ADEBAYO, FIYINFOLUWA SIMEON",
-    "account_number": "0999",
-    "bank_name": "United Bank for Africa",
-    "bank_key": "uba",
-    "from_date": "2019-05-01",
-    "to_date": "2019-05-22",
-    "transactions": [
-      
-    ],
-    "metadata": null,
-    "created_at": "2019-05-24T11:19:36.409Z",
-    "updated_at": "2019-05-27T11:19:36.409Z"
-  }
-];
 
 class BankStatements extends Component {
   constructor(props) {
@@ -85,7 +38,7 @@ class BankStatements extends Component {
   }
 
   componentDidMount() {
-    // this._fetchData()
+    this._fetchData()
   }
 
   handleChange(e) {
@@ -169,7 +122,7 @@ class BankStatements extends Component {
   }
 
   loadStatements(data) {
-    data = testData //data || [];
+    data = data || [];
 
     if (!data.length) {
       return (
@@ -226,7 +179,11 @@ class BankStatements extends Component {
   mapBankImages(key) {
     const images = {
       gtb: gtbImg,
-      accessbank: accessImg
+      accessbank: accessImg,
+      uba: ubaImg,
+      firstbank: firstbankImg,
+      hb: heritagebankImg,
+      ecobank: ecobankImg
     }
 
     return images[key]
