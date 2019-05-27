@@ -70,7 +70,13 @@ const apiRoutes = {
   supportedBanks: () => {
     return {
       method: 'GET',
-      path: '/api/v1/import_statements/supported_banks'
+      path: '/api/v1/bank_statements/supported_banks'
+    }
+  },
+  uploadBankStatement: () => {
+    return {
+      method: 'POST',
+      path: '/api/v1/bank_statements'
     }
   }
 };
