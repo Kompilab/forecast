@@ -1,0 +1,66 @@
+.all-statements {
+  .statements-list {
+    .statement-card {
+      border-radius: .25rem;
+      box-shadow: 0 3px 10px rgba(0,40,130,0.25);
+      padding: 10px;
+      position: relative;
+      transition: all ease-in-out .35s;
+
+      &:hover {
+        box-shadow: 0 8px 30px rgba(0,40,130,0.25);
+        cursor: pointer;
+        transition: all ease-in-out .35s;
+      }
+
+      .bank-details {
+        .bank-img {
+          position: absolute;
+          right: 10px;
+          top: 10px;
+          width: 20%;
+
+          img {
+            width: 100%;
+          }
+        }
+      }
+
+      .owner-details {
+        h6 {
+          letter-spacing: .75px;
+        }
+
+        p {
+          font-size: .875rem;
+          letter-spacing: 2px;
+        }
+      }
+
+      hr {
+        box-shadow: 0 2px 5px rgba(0,40,130,0.25);
+        margin-left: -10px;
+        margin-right: -10px;
+      }
+
+      .summary {
+        font-size: .875rem;
+        letter-spacing: .75px;
+
+        .credit {
+          color: #3c9035;
+        }
+
+        .debit {
+          color: #dc0000;
+        }
+      }
+
+      .uploaded-meta {
+        color: #a7a4a4;
+        font-size: .75rem;
+        letter-spacing: .75px;
+      }
+    }
+  }
+}

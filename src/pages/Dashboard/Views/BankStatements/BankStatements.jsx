@@ -3,6 +3,61 @@ import './BankStatements.scss';
 import FormattersHelpers from '../../../../helpers/formatter_helpers';
 import globalRequests from '../../../../services/global';
 import bankStatements from '../../../../services/bank_statements';
+import moment from 'moment';
+import gtbImg from '../../../../assets/images/banks/gtbank.png';
+import accessImg from '../../../../assets/images/banks/access-bank.png';
+import DateHelpers from '../../../../helpers/date_helpers';
+
+const testData = [
+  {
+    "id": 1,
+    "user_id": 1,
+    "account_name": "ADEBAYO, FIYINFOLUWA SIMEON",
+    "account_number": "8124",
+    "bank_name": "Guaranty Trust Bank",
+    "bank_key": "gtb",
+    "from_date": "2019-01-03",
+    "to_date": "2019-02-22",
+    "transactions": [
+      {}
+    ],
+    "metadata": null,
+    "created_at": "2019-05-27T11:19:36.409Z",
+    "updated_at": "2019-05-27T11:19:36.409Z"
+  },
+  {
+    "id": 2,
+    "user_id": 1,
+    "account_name": "ADEBAYO, FIYINFOLUWA",
+    "account_number": "1234",
+    "bank_name": "Access Bank",
+    "bank_key": "accessbank",
+    "from_date": "2019-05-01",
+    "to_date": "2019-05-22",
+    "transactions": [
+      {},{}
+    ],
+    "metadata": null,
+    "created_at": "2019-04-27T11:19:36.409Z",
+    "updated_at": "2019-05-27T11:19:36.409Z"
+  },
+  {
+    "id": 3,
+    "user_id": 1,
+    "account_name": "ADEBAYO, FIYINFOLUWA SIMEON",
+    "account_number": "0999",
+    "bank_name": "United Bank for Africa",
+    "bank_key": "uba",
+    "from_date": "2019-05-01",
+    "to_date": "2019-05-22",
+    "transactions": [
+      
+    ],
+    "metadata": null,
+    "created_at": "2019-05-24T11:19:36.409Z",
+    "updated_at": "2019-05-27T11:19:36.409Z"
+  }
+];
 
 class BankStatements extends Component {
   constructor(props) {
@@ -30,7 +85,7 @@ class BankStatements extends Component {
   }
 
   componentDidMount() {
-    this._fetchData()
+    // this._fetchData()
   }
 
   handleChange(e) {
@@ -114,7 +169,7 @@ class BankStatements extends Component {
   }
 
   loadStatements(data) {
-    data = data || [];
+    data = testData //data || [];
 
     if (!data.length) {
       return (
@@ -124,9 +179,57 @@ class BankStatements extends Component {
       )
     }
 
-    return (
-      <div>okay</div>
-    )
+    return data.map((s, index) => (
+      <div key={index} className="col-sm-6 col-md-4 col-lg-4 col-xl-3 mb-3">
+        <div className="statement-card">
+          <div className="bank-details">
+            <h6>{s.bank_name}</h6>
+            <div className="date-range">
+              <span className="badge badge-light">{moment(s.from_date).format('ll')}</span> to <span className="badge badge-light">{moment(s.to_date).format('ll')}</span>
+            </div>
+            <div>
+              {s.transactions.length} transaction{ s.transactions.length === 1 ? '' : 's'}
+            </div>
+
+            <div className="bank-img">
+              <img src={this.mapBankImages(s.bank_key)} alt={s.bank_key} />
+            </div>
+          </div>
+
+          <div className="owner-details my-4">
+            <h6>{s.account_name}</h6>
+            <p>******{s.account_number}</p>
+          </div>
+
+          <hr />
+
+          <div className="summary">
+            <div className="row credit">
+              <div className="col-6">Credits:</div>
+              <div className="col-6 text-right">N 0.00</div>
+            </div>
+
+            <div className="row debit">
+              <div className="col-6">Debits:</div>
+              <div className="col-6 text-right">N 0.00</div>
+            </div>
+          </div>
+
+          <div className="uploaded-meta mt-3">
+            uploaded {DateHelpers.calendar(s.created_at)}
+          </div>
+        </div>
+      </div>
+    ))
+  }
+
+  mapBankImages(key) {
+    const images = {
+      gtb: gtbImg,
+      accessbank: accessImg
+    }
+
+    return images[key]
   }
 
   render() {
@@ -200,7 +303,7 @@ class BankStatements extends Component {
           </div>
         </section>
 
-        <section className="all-transactions fo-section mb-3">
+        <section className="all-statements fo-section mb-3">
           <div className="header mb-3">
             <div className="">
               <h5>Bank Statements <span className="badge badge-light">{bankStatements && bankStatements.length}</span></h5>
@@ -213,7 +316,7 @@ class BankStatements extends Component {
             ): null
           }
 
-          <div className="transactions-list">
+          <div className="statements-list">
             {
               loading ? (
                 <div className="text-center">
@@ -222,8 +325,10 @@ class BankStatements extends Component {
                   </div>
                 </div>
               ) : (
-                <div>
-                  { this.loadStatements(bankStatements) }
+                <div className="container-fluid px-0">
+                  <div className="row">
+                    { this.loadStatements(bankStatements) }
+                  </div>
                 </div>
               )
             }
