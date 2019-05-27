@@ -47,7 +47,7 @@ const globalRequests = {
   async initBankStatements(cb) {
     try {
       const allResponses = await httpInterface.processMultiple(
-        [apiRoutes.supportedBanks()]
+        [apiRoutes.supportedBanks(), apiRoutes.bankStatements()]
       );
 
       let isSuccess = false;

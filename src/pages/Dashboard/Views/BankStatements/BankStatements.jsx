@@ -55,7 +55,7 @@ class BankStatements extends Component {
 
       if (success) {
         for(let i=0; i < responses.length; i++) {
-          let states = ['supportedBanks'];
+          let states = ['supportedBanks', 'bankStatements'];
 
           responses[i].then(data => {
             this.setState({
@@ -89,7 +89,7 @@ class BankStatements extends Component {
           uploadedFile: null,
           filePassword: ''
         });
-        // this._fetchData();
+        this._fetchData();
       } else {
         this.setState({
           formErrors: response,
