@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import './BankStatements.scss';
-import Icon from 'react-web-vector-icons';
-import TransactionForm from '../../../../components/TransactionForm';
 import FormattersHelpers from '../../../../helpers/formatter_helpers';
 import globalRequests from '../../../../services/global';
+import bankStatements from '../../../../services/bank_statements';
 
 class BankStatements extends Component {
   constructor(props) {
@@ -15,9 +13,11 @@ class BankStatements extends Component {
       supportedBanks: [],
       loading: false,
       errors: null,
+      uploading: false,
 
+      formErrors: null,
       selectedBank: '',
-      uploadedFile: {},
+      uploadedFile: null,
       filePassword: ''
     };
 
@@ -25,6 +25,8 @@ class BankStatements extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleOnFileChange = this.handleOnFileChange.bind(this);
     this.loadStatements = this.loadStatements.bind(this);
+    this.disableUpload = this.disableUpload.bind(this);
+    this._handleFileUpload = this._handleFileUpload.bind(this);
   }
 
   componentDidMount() {
@@ -69,6 +71,48 @@ class BankStatements extends Component {
     })
   }
 
+  _handleFileUpload(e) {
+    e.preventDefault();
+    this.setState({uploading: true, formErrors: null});
+    const formatData = this.prepData(this.state)
+
+    const data = new FormData();
+    data.append('import[file]', formatData.file)
+    data.append('import[bank_key]', formatData.bank_key)
+    data.append('import[password]', formatData.password)
+
+    bankStatements.upload(data, (success, response='') => {
+      if (success) {
+        this.setState({
+          uploading: false,
+          selectedBank: '',
+          uploadedFile: null,
+          filePassword: ''
+        });
+        // this._fetchData();
+      } else {
+        this.setState({
+          formErrors: response,
+          uploading: false
+        });
+      }
+    })
+  }
+
+  prepData(raw) {
+    return {
+      bank_key: raw.supportedBanks[raw.selectedBank].key,
+      file: raw.uploadedFile,
+      password: raw.filePassword
+    }
+  }
+
+  disableUpload() {
+    const { uploading, selectedBank, uploadedFile } = this.state;
+
+    return uploading || !selectedBank || !uploadedFile
+  }
+
   loadStatements(data) {
     data = data || [];
 
@@ -86,7 +130,7 @@ class BankStatements extends Component {
   }
 
   render() {
-    const { loading, bankStatements, errors, supportedBanks, selectedBank, uploadedFile } = this.state;
+    const { loading, bankStatements, errors, supportedBanks, selectedBank, uploadedFile, uploading, formErrors } = this.state;
     let allowedFormats = '';
 
     if (selectedBank) {
@@ -101,6 +145,12 @@ class BankStatements extends Component {
           <div className="row">
             <div className="col-12 summary-card p-3">
               <h5>Upload bank statement</h5>
+
+              {
+                formErrors ? (
+                  <div>{FormattersHelpers.formatErrors(formErrors)}</div>
+                ): null
+              }
 
               <form className="upload-form">
                 <div className="form-row">
@@ -119,8 +169,8 @@ class BankStatements extends Component {
                     <div className="input-group mb-2">
                       <div className="custom-file">
                         <input name="uploadedFile" type="file" accept=".pdf,.xls,.xlsx" className="custom-file-input" id="chooseStatementFile" onChange={this.handleOnFileChange} aria-describedby="inputGroupFileAddonBankStatement" />
-                        <label className="custom-file-label" htmlFor="inputGroupFile01">
-                          { !uploadedFile.name ? 'Choose file' : uploadedFile.name }</label>
+                        <label className="custom-file-label" htmlFor="chooseStatementFile">
+                          { (uploadedFile === undefined || uploadedFile === null) || (uploadedFile && !uploadedFile.name) ? 'Choose file' : (uploadedFile && uploadedFile.name) }</label>
                       </div>
                     </div>
                   </div>
@@ -129,6 +179,21 @@ class BankStatements extends Component {
                       <input id="filePassword" type="password" name="filePassword" className="form-control" onChange={this.handleChange} placeholder="File password (optional)" />
                     </div>
                   </div>
+                </div>
+
+                <div className="actions my-3 text-center">
+                  <button onClick={this._handleFileUpload} type="submit" className="btn btn-primary btn-fo-primary" disabled={this.disableUpload()}>
+                    {
+                      uploading ? (
+                        <div>
+                          <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                          Uploading...
+                        </div>
+                      ) : (
+                        <div>Upload</div>
+                      )
+                    }
+                  </button>
                 </div>
               </form>
             </div>
