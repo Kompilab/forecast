@@ -43,7 +43,19 @@ const httpInterface = {
     });
 
     return Promise.all(buildRequests)
-  }
+  },
+  postDataNoContentType(url, method, payload={}) {
+    return fetch(`${BASE_URL}${url}`, {
+      method: method,
+      mode: "cors",// no-cors, cors, *same-origin
+      cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+      credentials: "include", // include, same-origin, *omit
+      headers: {
+        "Authorization": cookie.get('_fo_')
+      },
+      body: payload
+    })
+  },
 };
 
 export default httpInterface;
