@@ -159,12 +159,12 @@ class BankStatements extends Component {
           <div className="summary">
             <div className="row credit">
               <div className="col-6">Credits:</div>
-              <div className="col-6 text-right">N 0.00</div>
+              <div className="col-6 text-right" dangerouslySetInnerHTML={{ __html: FormattersHelpers.formatAmount(s.total_credits) }}></div>
             </div>
 
             <div className="row debit">
               <div className="col-6">Debits:</div>
-              <div className="col-6 text-right">N 0.00</div>
+              <div className="col-6 text-right" dangerouslySetInnerHTML={{ __html: FormattersHelpers.formatAmount(s.total_debits) }}></div>
             </div>
           </div>
 
