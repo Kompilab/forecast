@@ -133,7 +133,7 @@ class Transactions extends Component {
 
             <div className="text-right">
               <div className="btn-group mr-2" role="group" aria-label="First group">
-                <button type="button" className="btn btn-sm btn-fo-primary btn-primary" onClick={this.handleToggleForm}>
+                <button type="button" className={`btn btn-sm ${formOpen ? 'btn-light' : 'btn-fo-primary btn-primary'}`} onClick={this.handleToggleForm}>
                   <div className="d-sm-block d-md-none">
                     { formOpen ? (
                       <Icon

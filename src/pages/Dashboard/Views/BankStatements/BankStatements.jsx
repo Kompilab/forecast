@@ -11,6 +11,7 @@ import ecobankImg from '../../../../assets/images/banks/ecobank.png';
 import firstbankImg from '../../../../assets/images/banks/firstbank-square.png';
 import heritagebankImg from '../../../../assets/images/banks/heritage-bank.jpeg';
 import DateHelpers from '../../../../helpers/date_helpers';
+import Icon from 'react-web-vector-icons';
 
 class BankStatements extends Component {
   constructor(props) {
@@ -23,6 +24,7 @@ class BankStatements extends Component {
       errors: null,
       uploading: false,
 
+      formOpen: false,
       formErrors: null,
       selectedBank: '',
       uploadedFile: null,
@@ -31,6 +33,7 @@ class BankStatements extends Component {
 
     this._fetchData = this._fetchData.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.handleToggleForm = this.handleToggleForm.bind(this);
     this.handleOnFileChange = this.handleOnFileChange.bind(this);
     this.loadStatements = this.loadStatements.bind(this);
     this.disableUpload = this.disableUpload.bind(this);
@@ -45,6 +48,12 @@ class BankStatements extends Component {
     this.setState({
       [e.target.name]: e.target.value
     })
+  }
+
+  handleToggleForm() {
+    this.setState(prevState => ({
+      formOpen: !prevState.formOpen
+    }))
   }
 
   handleOnFileChange(e) {
@@ -190,7 +199,17 @@ class BankStatements extends Component {
   }
 
   render() {
-    const { loading, bankStatements, errors, supportedBanks, selectedBank, uploadedFile, uploading, formErrors } = this.state;
+    const {
+      errors,
+      loading,
+      formOpen,
+      uploading,
+      formErrors,
+      uploadedFile,
+      selectedBank,
+      bankStatements,
+      supportedBanks
+    } = this.state;
     let allowedFormats = '';
 
     if (selectedBank) {
@@ -264,6 +283,31 @@ class BankStatements extends Component {
           <div className="header mb-3">
             <div className="">
               <h5>Bank Statements <span className="badge badge-light">{bankStatements && bankStatements.length}</span></h5>
+            </div>
+
+            <div className="text-right">
+              <button type="button" className={`btn btn-sm ${formOpen ? 'btn-light' : 'btn-fo-primary btn-primary'}`} onClick={this.handleToggleForm}>
+                <div className="d-sm-block d-md-none">
+                  { formOpen ? (
+                    <Icon
+                      font="AntDesign"
+                      name="close"
+                      color='#212529'
+                      size={15}
+                    />
+                  ) : (
+                    <Icon
+                      font="Feather"
+                      name="upload"
+                      color='#ffffff'
+                      size={15}
+                    />
+                  ) }
+                </div>
+                <span className="d-none d-sm-none d-md-block">
+                  { formOpen ? 'Cancel' : 'Upload' }
+                </span>
+              </button>
             </div>
           </div>
 
