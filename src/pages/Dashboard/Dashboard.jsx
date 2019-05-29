@@ -40,7 +40,9 @@ const dashboardRoutes = [
     name: 'Categories',
     path: '/dashboard/categories',
     main: () => <Categories />,
-    show: false
+    font: 'FontAwesome',
+    fontName: 'object-group',
+    show: true
   }
 ];
 

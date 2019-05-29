@@ -172,7 +172,7 @@ class Transactions extends Component {
                   </button>
                   <div className="dropdown-menu dropdown-menu-right" aria-labelledby="tx-more-options">
                     <Link to="/dashboard/categories" className="dropdown-item">Manage Categories</Link>
-                    <a className="dropdown-item" href="#">Import Transactions</a>
+                    <Link to="/dashboard/bank-statements" className="dropdown-item">Import Transactions</Link>
                     <a className="dropdown-item" href="#">Export Summary</a>
                   </div>
                 </div>

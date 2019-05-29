@@ -17,7 +17,7 @@ class Home extends Component {
           name: 'Stay Organized',
           icon: 'organization',
           font: 'SimpleLineIcons',
-          summary: 'Monitor cash flow and stay on top of your finances.'
+          summary: 'Monitor cash flow of all your bank accounts in one place and stay on top of your finances.'
         },
         {
           position: '02',
