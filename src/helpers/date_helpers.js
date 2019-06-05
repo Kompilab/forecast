@@ -12,7 +12,7 @@ const DateHelpers = {
       nextDay : '[tomorrow at] LT',
       lastWeek : '[last] dddd [at] LT',
       nextWeek : 'dddd [at] LT',
-      sameElse : 'll'
+      sameElse : 'll[,] LT'
   });
   }
 };
